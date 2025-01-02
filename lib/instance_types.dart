@@ -26,10 +26,17 @@ class InstanceTypesCommand extends Command<void> {
       ],
     );
 
-    // TODO: Error handling.
-    final instanceTypes = await instanceTypesFuture;
+    final InstanceTypes200Response instanceTypes;
+    try {
+      final maybeInstanceTypes = await instanceTypesFuture;
+        // This should never be null: an ApiException should have been thrown instead.
+      instanceTypes = maybeInstanceTypes!;
+    } on ApiException catch (e) {
+      stderr.write('Failed to fetch instance types: ${e.message}');
+      return;
+    }
 
-    final rows = instanceTypes!.data.entries.map((entry) => [
+    final rows = instanceTypes.data.entries.map((entry) => [
           entry.value.instanceType.description,
           entry.value.instanceType.specs.vcpus,
           entry.value.instanceType.specs.memoryGib,

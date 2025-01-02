@@ -27,15 +27,23 @@ class InstancesCommand extends Command<void> {
       ],
     );
 
-    // TODO: Error handling.
-    final instances = await instancesFuture;
-    final rows = instances!.data.map((i) => [
+    final ListInstances200Response instances;
+    try {
+      final maybeInstances = await instancesFuture;
+      // This should never be null: an ApiException should have been thrown instead.
+      instances = maybeInstances!;
+    } on ApiException catch (e) {
+      stderr.write('Failed to instances: ${e.message}');
+      return;
+    }
+
+    final rows = instances.data.map((i) => [
           i.name,
           i.instanceType!.name,
           i.ip,
           i.region!.name,
           i.sshKeyNames.join(', '),
-          // TODO: Replace with correct user-facing name.
+          // TODO: Create a mapping to the correct user-facing name.
           i.status.value,
         ]);
     table.addAll(rows);
