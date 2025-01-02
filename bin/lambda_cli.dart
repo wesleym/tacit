@@ -1,5 +1,16 @@
-import 'package:lambda_cli/lambda_cli.dart' as lambda_cli;
+import 'package:args/command_runner.dart';
+import 'package:lambda_cli/instances.dart';
+import 'package:lambda_cli/secrets.dart';
+import 'package:openapi/api.dart';
 
 void main(List<String> arguments) {
-  print('Hello world: ${lambda_cli.calculate()}!');
+  defaultApiClient = ApiClient(
+    authentication: ApiKeyAuth('header', 'Authorization')
+      ..apiKeyPrefix = 'Bearer'
+      ..apiKey = apiKey,
+  );
+
+  CommandRunner('lambda', 'The Lambda Cloud CLI')
+    ..addCommand(InstancesCommand())
+    ..run(arguments);
 }
