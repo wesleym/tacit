@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:args/command_runner.dart';
 import 'package:lambda_cli/src/commands/filesystems.dart';
 import 'package:lambda_cli/src/commands/instance_types.dart';
@@ -13,10 +15,14 @@ void main(List<String> arguments) {
       ..apiKey = apiKey,
   );
 
-  CommandRunner('lambda', 'The Lambda Cloud CLI')
+  final runner = CommandRunner('lambda', 'The Lambda Cloud CLI')
     ..addCommand(InstancesCommand())
     ..addCommand(InstanceTypesCommand())
     ..addCommand(FilesystemsCommand())
-    ..addCommand(SshCommand())
-    ..run(arguments);
+    ..addCommand(SshCommand());
+  runner.run(arguments).catchError((error) {
+    assert (error is UsageException);
+    stderr.writeln(error);
+    exit(64);
+  });
 }
