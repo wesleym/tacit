@@ -13,6 +13,17 @@ class InstanceTypesCommand extends Command<void> {
   String get name => 'instance-types';
 
   @override
+  String get invocation {
+    var parents = [name];
+    for (var command = parent; command != null; command = command.parent) {
+      parents.add(command.name);
+    }
+    parents.add(runner!.executableName);
+
+    return parents.reversed.join(' ');
+  }
+
+  @override
   Future<void> run() async {
     final instanceTypesFuture = DefaultApi(defaultApiClient).instanceTypes();
 
@@ -29,7 +40,7 @@ class InstanceTypesCommand extends Command<void> {
     final InstanceTypes200Response instanceTypes;
     try {
       final maybeInstanceTypes = await instanceTypesFuture;
-        // This should never be null: an ApiException should have been thrown instead.
+      // This should never be null: an ApiException should have been thrown instead.
       instanceTypes = maybeInstanceTypes!;
     } on ApiException catch (e) {
       stderr.write('Failed to fetch instance types: ${e.message}');
@@ -41,7 +52,8 @@ class InstanceTypesCommand extends Command<void> {
           entry.value.instanceType.specs.vcpus,
           entry.value.instanceType.specs.memoryGib,
           entry.value.instanceType.specs.storageGib,
-          (entry.value.instanceType.priceCentsPerHour / 100.0).toStringAsFixed(2),
+          (entry.value.instanceType.priceCentsPerHour / 100.0)
+              .toStringAsFixed(2),
         ]);
     table.addAll(rows);
     stdout.writeln(table);

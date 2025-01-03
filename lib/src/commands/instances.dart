@@ -13,6 +13,17 @@ class InstancesCommand extends Command<void> {
   String get name => 'instances';
 
   @override
+  String get invocation {
+    var parents = [name];
+    for (var command = parent; command != null; command = command.parent) {
+      parents.add(command.name);
+    }
+    parents.add(runner!.executableName);
+
+    return parents.reversed.join(' ');
+  }
+
+  @override
   Future<void> run() async {
     final instancesFuture = DefaultApi(defaultApiClient).listInstances();
 
