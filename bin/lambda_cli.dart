@@ -20,7 +20,8 @@ void main(List<String> arguments) {
     ..addCommand(InstanceTypesCommand())
     ..addCommand(FilesystemsCommand())
     ..addCommand(ListSshKeysCommand())
-    ..addCommand(AddSshKeyCommand());
+    ..addCommand(AddSshKeyCommand())
+    ..addCommand(DeleteSshKeyCommand());
   runner.run(arguments).catchError((error) {
     assert (error is UsageException);
     stderr.writeln(error);

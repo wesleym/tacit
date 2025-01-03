@@ -27,6 +27,7 @@ class ListSshKeysCommand extends Command<void> {
   Future<void> run() async {
     final table = Table(
       header: [
+        'ID',
         'Name',
         'Public Key',
       ],
@@ -43,6 +44,7 @@ class ListSshKeysCommand extends Command<void> {
     }
 
     final rows = sshKeys.data.map((sk) => [
+          sk.id,
           sk.name,
           sk.publicKey,
         ]);
@@ -59,7 +61,7 @@ class AddSshKeyCommand extends Command<void> {
   }
 
   @override
-  String get description => 'List SSH Keys';
+  String get description => 'Add SSH Key';
 
   @override
   String get name => 'add-ssh-key';
@@ -105,5 +107,42 @@ class AddSshKeyCommand extends Command<void> {
         ..writeln('Private key:')
         ..writeln(sshKeys.data.privateKey);
     }
+  }
+}
+
+class DeleteSshKeyCommand extends Command<void> {
+  @override
+  String get description => 'Delete SSH Keys';
+
+  @override
+  String get name => 'delete-ssh-key';
+
+  @override
+  String get invocation {
+    var parents = [name];
+    for (var command = parent; command != null; command = command.parent) {
+      parents.add(command.name);
+    }
+    parents.add(runner!.executableName);
+
+    final invocation = parents.reversed.join(' ');
+    return '$invocation id';
+  }
+
+  @override
+  Future<void> run() async {
+    final rest = argResults!.rest;
+    if (rest.length != 1) {
+      usageException('Parameter "id" is required.');
+    }
+
+    try {
+      await DefaultApi(defaultApiClient).deleteSSHKey(rest[0]);
+    } on ApiException catch (e) {
+      stderr.write('Failed to delete SSH public key: ${e.message}');
+      return;
+    }
+
+    stdout.writeln('SSH key ${rest[0]} deleted.');
   }
 }
