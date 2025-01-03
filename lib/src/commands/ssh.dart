@@ -25,8 +25,6 @@ class ListSshKeysCommand extends Command<void> {
 
   @override
   Future<void> run() async {
-    final sshKeysFuture = DefaultApi(defaultApiClient).listSSHKeys();
-
     final table = Table(
       header: [
         'Name',
@@ -36,7 +34,7 @@ class ListSshKeysCommand extends Command<void> {
 
     final ListSSHKeys200Response sshKeys;
     try {
-      final maybeSshKeys = await sshKeysFuture;
+      final maybeSshKeys = await DefaultApi(defaultApiClient).listSSHKeys();
       // This should never be null: an ApiException should have been thrown instead.
       sshKeys = maybeSshKeys!;
     } on ApiException catch (e) {
@@ -84,8 +82,6 @@ class AddSshKeyCommand extends Command<void> {
     if (rest.length != 1) {
       usageException('Parameter "name" is required.');
     }
-    final sshKeysFuture = DefaultApi(defaultApiClient)
-        .addSSHKey(AddSSHKeyRequest(name: rest[0]));
 
     final table = Table(
       header: [
@@ -97,7 +93,8 @@ class AddSshKeyCommand extends Command<void> {
 
     final AddSSHKey200Response sshKeys;
     try {
-      final maybeSshKeys = await sshKeysFuture;
+      final maybeSshKeys = await DefaultApi(defaultApiClient)
+          .addSSHKey(AddSSHKeyRequest(name: rest[0]));
       // This should never be null: an ApiException should have been thrown instead.
       sshKeys = maybeSshKeys!;
     } on ApiException catch (e) {

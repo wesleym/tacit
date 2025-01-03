@@ -25,8 +25,6 @@ class FilesystemsCommand extends Command<void> {
 
   @override
   Future<void> run() async {
-    final filesystemsFuture = DefaultApi(defaultApiClient).listFileSystems();
-
     final table = Table(
       header: [
         'Name',
@@ -39,7 +37,8 @@ class FilesystemsCommand extends Command<void> {
 
     final ListFileSystems200Response filesystems;
     try {
-      final maybeFilesystems = await filesystemsFuture;
+      final maybeFilesystems =
+          await DefaultApi(defaultApiClient).listFileSystems();
       // This should never be null: an ApiException should have been thrown instead.
       filesystems = maybeFilesystems!;
     } on ApiException catch (e) {

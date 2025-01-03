@@ -25,8 +25,6 @@ class InstanceTypesCommand extends Command<void> {
 
   @override
   Future<void> run() async {
-    final instanceTypesFuture = DefaultApi(defaultApiClient).instanceTypes();
-
     final table = Table(
       header: [
         'Name',
@@ -39,7 +37,8 @@ class InstanceTypesCommand extends Command<void> {
 
     final InstanceTypes200Response instanceTypes;
     try {
-      final maybeInstanceTypes = await instanceTypesFuture;
+      final maybeInstanceTypes =
+          await DefaultApi(defaultApiClient).instanceTypes();
       // This should never be null: an ApiException should have been thrown instead.
       instanceTypes = maybeInstanceTypes!;
     } on ApiException catch (e) {
