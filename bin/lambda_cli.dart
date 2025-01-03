@@ -17,6 +17,7 @@ void main(List<String> arguments) {
 
   final runner = CommandRunner('lambda_cli.exe', 'A Lambda Cloud CLI')
     ..addCommand(ListInstancesCommand())
+    ..addCommand(TerminateInstancesCommand())
     ..addCommand(RestartInstancesCommand())
     ..addCommand(InstanceTypesCommand())
     ..addCommand(FilesystemsCommand())

@@ -62,6 +62,64 @@ class ListInstancesCommand extends Command<void> {
   }
 }
 
+class TerminateInstancesCommand extends Command<void> {
+  @override
+  String get description => 'Terminate instances';
+
+  @override
+  String get name => 'terminate-instances';
+
+  @override
+  String get invocation {
+    var parents = [name];
+    for (var command = parent; command != null; command = command.parent) {
+      parents.add(command.name);
+    }
+    parents.add(runner!.executableName);
+
+    final invocation = parents.reversed.join(' ');
+    return '$invocation [instance_ids...]';
+  }
+
+  @override
+  Future<void> run() async {
+    final table = Table(
+      header: [
+        'Name',
+        'Type',
+        'IP Address',
+        'Region',
+        'SSH Key',
+        'Status',
+      ],
+    );
+
+    final TerminateInstance200Response instances;
+    try {
+      final maybeInstances = await DefaultApi(defaultApiClient)
+          .terminateInstance(
+              TerminateInstanceRequest(instanceIds: argResults!.rest));
+      // This should never be null: an ApiException should have been thrown instead.
+      instances = maybeInstances!;
+    } on ApiException catch (e) {
+      stderr.write('Failed to restart instances: ${e.message}');
+      return;
+    }
+
+    final rows = instances.data.terminatedInstances.map((i) => [
+          i.name,
+          i.instanceType!.name,
+          i.ip,
+          i.region!.name,
+          i.sshKeyNames.join(', '),
+          // TODO: Create a mapping to the correct user-facing name.
+          i.status.value,
+        ]);
+    table.addAll(rows);
+    stdout.writeln(table);
+  }
+}
+
 class RestartInstancesCommand extends Command<void> {
   @override
   String get description => 'Restart instances';
@@ -96,7 +154,8 @@ class RestartInstancesCommand extends Command<void> {
 
     final RestartInstance200Response instances;
     try {
-      final maybeInstances = await DefaultApi(defaultApiClient).restartInstance(RestartInstanceRequest(instanceIds: argResults!.rest));
+      final maybeInstances = await DefaultApi(defaultApiClient).restartInstance(
+          RestartInstanceRequest(instanceIds: argResults!.rest));
       // This should never be null: an ApiException should have been thrown instead.
       instances = maybeInstances!;
     } on ApiException catch (e) {
