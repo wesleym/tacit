@@ -4,8 +4,17 @@ Lambda Cloud CLI in Dart
 A prototype.
 
 Building
-----
+-----
 
-Here’s a puzzle: `//lib/src/secrets.dart` is missing. Can you figure out its format and contents?
+```shell
+make
+```
 
-Once you do, `make`. The result will be in `//bin`.
+The result will be in `//bin`.
+
+Running
+-----
+
+```shell
+LAMBDA_API_KEY=secret_lambda-cli_0123456789abcdef0123456789abcdef.abcdefghijklmnopqrstuvwxyzABCDEF bin/lambda_cli.exe 
+```
