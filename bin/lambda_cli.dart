@@ -19,7 +19,8 @@ void main(List<String> arguments) {
     ..addCommand(InstancesCommand())
     ..addCommand(InstanceTypesCommand())
     ..addCommand(FilesystemsCommand())
-    ..addCommand(SshCommand());
+    ..addCommand(ListSshKeysCommand())
+    ..addCommand(AddSshKeyCommand());
   runner.run(arguments).catchError((error) {
     assert (error is UsageException);
     stderr.writeln(error);
