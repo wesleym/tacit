@@ -126,14 +126,14 @@ class DeleteSshKeyCommand extends Command<void> {
     parents.add(runner!.executableName);
 
     final invocation = parents.reversed.join(' ');
-    return '$invocation id';
+    return '$invocation ssh_key_id';
   }
 
   @override
   Future<void> run() async {
     final rest = argResults!.rest;
     if (rest.length != 1) {
-      usageException('Parameter "id" is required.');
+      usageException('Parameter "ssh_key_id" is required.');
     }
 
     try {
