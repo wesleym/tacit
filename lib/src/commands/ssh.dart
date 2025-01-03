@@ -83,14 +83,6 @@ class AddSshKeyCommand extends Command<void> {
       usageException('Parameter "name" is required.');
     }
 
-    final table = Table(
-      header: [
-        'Name',
-        'Private Key',
-        'Public Key',
-      ],
-    );
-
     final AddSSHKey200Response sshKeys;
     try {
       final maybeSshKeys = await DefaultApi(defaultApiClient)
@@ -102,11 +94,16 @@ class AddSshKeyCommand extends Command<void> {
       return;
     }
 
-    table.add([
-      sshKeys.data.name,
-      sshKeys.data.publicKey,
-      sshKeys.data.privateKey,
-    ]);
-    stdout.writeln(table);
+    stdout
+      ..writeln('Name: ${sshKeys.data.name}')
+      ..writeln()
+      ..writeln('Public key:')
+      ..writeln(sshKeys.data.publicKey);
+    if (sshKeys.data.privateKey != null) {
+      stdout
+        ..writeln()
+        ..writeln('Private key:')
+        ..writeln(sshKeys.data.privateKey);
+    }
   }
 }
