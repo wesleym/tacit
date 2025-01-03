@@ -62,6 +62,73 @@ class ListInstancesCommand extends Command<void> {
   }
 }
 
+class LaunchInstancesCommand extends Command<void> {
+  LaunchInstancesCommand() {
+    argParser
+      ..addOption('region-name',
+          help: 'Short name of a region', mandatory: true)
+      ..addOption('instance-type',
+          help: 'Name of an instance type', mandatory: true)
+      ..addOption('ssh-key',
+          help: 'Name of the SSH key to allow access to the instances.',
+          mandatory: true)
+      ..addOption('filesystem',
+          help: 'Name of the filesystem to attach to the instances.')
+      ..addOption('quantity',
+          help: 'Name of the filesystem to attach to the instances.',
+          defaultsTo: '1');
+  }
+
+  @override
+  String get description => 'Launch instances';
+
+  @override
+  String get name => 'launch-instances';
+
+  @override
+  String get invocation {
+    var parents = [name];
+    for (var command = parent; command != null; command = command.parent) {
+      parents.add(command.name);
+    }
+    parents.add(runner!.executableName);
+
+    final invocation = parents.reversed.join(' ');
+    return '$invocation --region-name region_name --instance-type instance_type_name --ssh-key ssh_key_name [--filesystem filesystem_name] [--quantity 1] [name]';
+  }
+
+  @override
+  Future<void> run() async {
+    final table = Table(header: ['Instance ID']);
+
+    final filesystemNames = <String>[];
+    final filesystemValue = argResults!.option('filesystem');
+    if (filesystemValue != null) {
+      filesystemNames.add(filesystemValue);
+    }
+
+    final LaunchInstance200Response instances;
+    try {
+      final maybeInstances = await DefaultApi(defaultApiClient)
+          .launchInstance(LaunchInstanceRequest(
+        regionName: argResults!.option('region-name')!,
+        instanceTypeName: argResults!.option('instance-type')!,
+        sshKeyNames: [argResults!.option('ssh-key')!],
+        fileSystemNames: filesystemNames,
+      ));
+      // This should never be null: an ApiException should have been thrown instead.
+      instances = maybeInstances!;
+    } on ApiException catch (e) {
+      stderr.write('Failed to restart instances: ${e.message}');
+      return;
+    }
+
+    final rows = instances.data.instanceIds.map((i) => [i]);
+    table.addAll(rows);
+    stdout.writeln(table);
+  }
+}
+
 class TerminateInstancesCommand extends Command<void> {
   @override
   String get description => 'Terminate instances';
