@@ -1,7 +1,7 @@
 Lambda Cloud CLI in Dart
 =====
 
-A prototype.
+A command-line interface to Lambda Cloud that interacts with the ll external API. This program is intended to generate usage of the ll external API typical of a direct API call or a script.
 
 Building
 -----
