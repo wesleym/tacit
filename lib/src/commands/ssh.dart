@@ -7,7 +7,7 @@ import 'package:openapi/api.dart';
 
 class ListSshKeysCommand extends Command<void> {
   @override
-  String get description => 'List Registered SSH Public Keys';
+  String get description => 'List registered SSH keys';
 
   @override
   String get name => 'ssh-keys';
@@ -61,7 +61,7 @@ class AddSshKeyCommand extends Command<void> {
   }
 
   @override
-  String get description => 'Add SSH Key';
+  String get description => 'Add SSH key';
 
   @override
   String get name => 'add-ssh-key';
@@ -112,7 +112,7 @@ class AddSshKeyCommand extends Command<void> {
 
 class DeleteSshKeyCommand extends Command<void> {
   @override
-  String get description => 'Delete SSH Keys';
+  String get description => 'Delete SSH keys';
 
   @override
   String get name => 'delete-ssh-key';
