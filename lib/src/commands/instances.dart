@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:args/command_runner.dart';
 import 'package:cli_table/cli_table.dart';
+import 'package:colorize/colorize.dart';
 import 'package:openapi/api.dart';
 
 class ListInstancesCommand extends Command<void> {
@@ -59,6 +61,81 @@ class ListInstancesCommand extends Command<void> {
         ]);
     table.addAll(rows);
     stdout.writeln(table);
+  }
+}
+
+class InstanceDetailsCommand extends Command<void> {
+  @override
+  String get description => 'Get details of a specific instance';
+
+  @override
+  String get name => 'instance';
+
+  @override
+  String get invocation {
+    var parents = [name];
+    for (var command = parent; command != null; command = command.parent) {
+      parents.add(command.name);
+    }
+    parents.add(runner!.executableName);
+
+    var invocation = parents.reversed.join(' ');
+    return '$invocation instance_id';
+  }
+
+  @override
+  Future<void> run() async {
+    var rest = argResults!.rest;
+    if (rest.length != 1) {
+      usageException('Parameter "instance_id" is required.');
+    }
+
+    final GetInstance200Response instance;
+    try {
+      final maybeInstance =
+          await DefaultApi(defaultApiClient).getInstance(rest[0]);
+      // This should never be null: an ApiException should have been thrown instead.
+      instance = maybeInstance!;
+    } on ApiException catch (e) {
+      stderr.write('Failed to instances: ${e.message}');
+      return;
+    }
+
+    final headers = [
+      'Instance ID:',
+      'Name:',
+      'Instance type:',
+      'IP address:',
+      'Region:',
+      'SSH keys:',
+      'Status:',
+    ];
+    final headerWidth =
+        headers.fold(0, (value, element) => max(value, element.length));
+
+    final values = [
+      instance.data.id,
+      instance.data.name,
+      instance.data.instanceType!.description,
+      instance.data.ip,
+      instance.data.region!.name,
+      instance.data.sshKeyNames.join(', '),
+      instance.data.status.value,
+    ];
+
+    assert(headers.length == values.length);
+
+    final title = 'GPU Instance';
+
+    stdout
+      ..writeln(title)
+      ..writeln('=' * title.length)
+      ..writeln();
+
+    for (var i = 0; i < headers.length; i++) {
+      var header = Colorize(headers[i].padLeft(headerWidth)).red().bold();
+      stdout.writeln('$header ${values[i]}');
+    }
   }
 }
 

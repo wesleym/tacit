@@ -17,6 +17,7 @@ void main(List<String> arguments) {
 
   final runner = CommandRunner('lambda_cli.exe', 'A Lambda Cloud CLI')
     ..addCommand(ListInstancesCommand())
+    ..addCommand(InstanceDetailsCommand())
     ..addCommand(LaunchInstancesCommand())
     ..addCommand(TerminateInstancesCommand())
     ..addCommand(RestartInstancesCommand())
@@ -26,7 +27,7 @@ void main(List<String> arguments) {
     ..addCommand(AddSshKeyCommand())
     ..addCommand(DeleteSshKeyCommand());
   runner.run(arguments).catchError((error) {
-    assert (error is UsageException);
+    assert(error is UsageException);
     stderr.writeln(error);
     exit(64);
   });
