@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:args/command_runner.dart';
-import 'package:cli_table/cli_table.dart';
+import 'package:lambda_cli/src/kvprinter.dart';
 import 'package:openapi/api.dart';
 
 class ListSshKeysCommand extends Command<void> {
@@ -25,14 +25,6 @@ class ListSshKeysCommand extends Command<void> {
 
   @override
   Future<void> run() async {
-    final table = Table(
-      header: [
-        'ID',
-        'Name',
-        'Public Key',
-      ],
-    );
-
     final ListSSHKeys200Response sshKeys;
     try {
       final maybeSshKeys = await DefaultApi(defaultApiClient).listSSHKeys();
@@ -43,13 +35,25 @@ class ListSshKeysCommand extends Command<void> {
       return;
     }
 
-    final rows = sshKeys.data.map((sk) => [
-          sk.id,
-          sk.name,
-          sk.publicKey,
-        ]);
-    table.addAll(rows);
-    stdout.writeln(table);
+    if (sshKeys.data.isEmpty) {
+      stdout.writeln('No SSH keys registered.');
+      return;
+    }
+
+    printKvs([
+      Kv('ID:', sshKeys.data[0].id),
+      Kv('Name:', sshKeys.data[0].name),
+      Kv('Public key:', sshKeys.data[0].publicKey),
+    ]);
+
+    for (final key in sshKeys.data.sublist(1)) {
+      stdout.writeln();
+      printKvs([
+        Kv('ID:', key.id),
+        Kv('Name:', key.name),
+        Kv('Public key:', key.publicKey),
+      ]);
+    }
   }
 }
 

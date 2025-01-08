@@ -1,10 +1,9 @@
 import 'dart:async';
 import 'dart:io';
-import 'dart:math';
 
 import 'package:args/command_runner.dart';
 import 'package:cli_table/cli_table.dart';
-import 'package:colorize/colorize.dart';
+import 'package:lambda_cli/src/kvprinter.dart';
 import 'package:openapi/api.dart';
 
 class ListInstancesCommand extends Command<void> {
@@ -101,30 +100,6 @@ class InstanceDetailsCommand extends Command<void> {
       return;
     }
 
-    final headers = [
-      'Instance ID:',
-      'Name:',
-      'Instance type:',
-      'IP address:',
-      'Region:',
-      'SSH keys:',
-      'Status:',
-    ];
-    final headerWidth =
-        headers.fold(0, (value, element) => max(value, element.length));
-
-    final values = [
-      instance.data.id,
-      instance.data.name,
-      instance.data.instanceType!.description,
-      instance.data.ip,
-      instance.data.region!.name,
-      instance.data.sshKeyNames.join(', '),
-      instance.data.status.value,
-    ];
-
-    assert(headers.length == values.length);
-
     final title = 'GPU Instance';
 
     stdout
@@ -132,10 +107,15 @@ class InstanceDetailsCommand extends Command<void> {
       ..writeln('=' * title.length)
       ..writeln();
 
-    for (var i = 0; i < headers.length; i++) {
-      var header = Colorize(headers[i].padLeft(headerWidth)).red().bold();
-      stdout.writeln('$header ${values[i]}');
-    }
+    printKvs([
+      Kv('Instance ID:', instance.data.id),
+      Kv('Name:', instance.data.name),
+      Kv('Instance type:', instance.data.instanceType!.description),
+      Kv('IP address:', instance.data.ip),
+      Kv('Region:', instance.data.region!.name),
+      Kv('SSH keys:', instance.data.sshKeyNames.join(', ')),
+      Kv('Status:', instance.data.status.value),
+    ]);
   }
 }
 
