@@ -9,7 +9,7 @@ import 'package:lambda_cli/src/commands/ssh.dart';
 import 'package:lambda_cli/src/secrets.dart';
 import 'package:openapi/api.dart';
 
-void main(List<String> arguments) {
+void main(List<String> arguments) async {
   defaultApiClient = ApiClient(
     authentication: ApiKeyAuth('header', 'Authorization')
       ..apiKeyPrefix = 'Bearer'
@@ -28,9 +28,12 @@ void main(List<String> arguments) {
     ..addCommand(AddSshKeyCommand())
     ..addCommand(DeleteSshKeyCommand())
     ..addCommand(ChatCommand());
-  runner.run(arguments).catchError((error) {
-    assert(error is UsageException);
-    stderr.writeln(error);
+  try {
+    await runner.run(arguments);
+  } on UsageException catch (e) {
+    stderr.writeln(e);
     exit(64);
-  });
+  }
+
+  exit(0);
 }
