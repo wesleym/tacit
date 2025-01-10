@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:args/command_runner.dart';
+import 'package:lambda_cli/src/commands/chat.dart';
 import 'package:lambda_cli/src/commands/filesystems.dart';
 import 'package:lambda_cli/src/commands/instance_types.dart';
 import 'package:lambda_cli/src/commands/instances.dart';
@@ -25,7 +26,8 @@ void main(List<String> arguments) {
     ..addCommand(FilesystemsCommand())
     ..addCommand(ListSshKeysCommand())
     ..addCommand(AddSshKeyCommand())
-    ..addCommand(DeleteSshKeyCommand());
+    ..addCommand(DeleteSshKeyCommand())
+    ..addCommand(ChatCommand());
   runner.run(arguments).catchError((error) {
     assert(error is UsageException);
     stderr.writeln(error);
