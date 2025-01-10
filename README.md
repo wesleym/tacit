@@ -18,5 +18,5 @@ Running
 -----
 
 ```shell
-LAMBDA_API_KEY=secret_lambda-cli_0123456789abcdef0123456789abcdef.abcdefghijklmnopqrstuvwxyzABCDEF bin/lambda_cli.exe 
+LAMBDA_API_KEY=secret_lambda-cli_0123456789abcdef0123456789abcdef.abcdefghijklmnopqrstuvwxyzABCDEF bin/lambda
 ```

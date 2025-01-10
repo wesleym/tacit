@@ -15,7 +15,7 @@ void main(List<String> arguments) {
       ..apiKey = apiKey,
   );
 
-  final runner = CommandRunner('lambda_cli.exe', 'A Lambda Cloud CLI')
+  final runner = CommandRunner('lambda', 'A Lambda Cloud CLI')
     ..addCommand(ListInstancesCommand())
     ..addCommand(InstanceDetailsCommand())
     ..addCommand(LaunchInstancesCommand())
