@@ -35,10 +35,10 @@ class FilesystemsCommand extends Command<void> {
       ],
     );
 
-    final ListFileSystems200Response filesystems;
+    final ListFilesystems200Response filesystems;
     try {
       final maybeFilesystems =
-          await DefaultApi(defaultApiClient).listFileSystems();
+          await FilesystemsApi(defaultApiClient).listFilesystems();
       // This should never be null: an ApiException should have been thrown instead.
       filesystems = maybeFilesystems!;
     } on ApiException catch (e) {

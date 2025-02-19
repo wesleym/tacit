@@ -40,7 +40,8 @@ class ListInstancesCommand extends Command<void> {
 
     final ListInstances200Response instances;
     try {
-      final maybeInstances = await DefaultApi(defaultApiClient).listInstances();
+      final maybeInstances =
+          await InstancesApi(defaultApiClient).listInstances();
       // This should never be null: an ApiException should have been thrown instead.
       instances = maybeInstances!;
     } on ApiException catch (e) {
@@ -51,9 +52,9 @@ class ListInstancesCommand extends Command<void> {
     final rows = instances.data.map((i) => [
           i.id,
           i.name,
-          i.instanceType!.name,
+          i.instanceType.name,
           i.ip,
-          i.region!.name,
+          i.region.name,
           i.sshKeyNames.join(', '),
           // TODO: Create a mapping to the correct user-facing name.
           i.status.value,
@@ -92,7 +93,7 @@ class InstanceDetailsCommand extends Command<void> {
     final GetInstance200Response instance;
     try {
       final maybeInstance =
-          await DefaultApi(defaultApiClient).getInstance(rest[0]);
+          await InstancesApi(defaultApiClient).getInstance(rest[0]);
       // This should never be null: an ApiException should have been thrown instead.
       instance = maybeInstance!;
     } on ApiException catch (e) {
@@ -110,9 +111,9 @@ class InstanceDetailsCommand extends Command<void> {
     printKvs([
       Kv('Instance ID:', instance.data.id),
       Kv('Name:', instance.data.name),
-      Kv('Instance type:', instance.data.instanceType!.description),
+      Kv('Instance type:', instance.data.instanceType.description),
       Kv('IP address:', instance.data.ip),
-      Kv('Region:', instance.data.region!.name),
+      Kv('Region:', instance.data.region.name.value),
       Kv('SSH keys:', instance.data.sshKeyNames.join(', ')),
       Kv('Status:', instance.data.status.value),
     ]);
@@ -164,11 +165,15 @@ class LaunchInstancesCommand extends Command<void> {
       filesystemNames.add(filesystemValue);
     }
 
+    final regionNameString = argResults!.option('region-name');
+    final regionName =
+        PublicRegionCode.values.firstWhere((r) => r.value == regionNameString);
+
     final LaunchInstance200Response instances;
     try {
-      final maybeInstances = await DefaultApi(defaultApiClient)
-          .launchInstance(LaunchInstanceRequest(
-        regionName: argResults!.option('region-name')!,
+      final maybeInstances = await InstancesApi(defaultApiClient)
+          .launchInstance(InstanceLaunchRequest(
+        regionName: regionName,
         instanceTypeName: argResults!.option('instance-type')!,
         sshKeyNames: [argResults!.option('ssh-key')!],
         fileSystemNames: filesystemNames,
@@ -220,9 +225,9 @@ class TerminateInstancesCommand extends Command<void> {
 
     final TerminateInstance200Response instances;
     try {
-      final maybeInstances = await DefaultApi(defaultApiClient)
+      final maybeInstances = await InstancesApi(defaultApiClient)
           .terminateInstance(
-              TerminateInstanceRequest(instanceIds: argResults!.rest));
+              InstanceTerminateRequest(instanceIds: argResults!.rest));
       // This should never be null: an ApiException should have been thrown instead.
       instances = maybeInstances!;
     } on ApiException catch (e) {
@@ -232,9 +237,9 @@ class TerminateInstancesCommand extends Command<void> {
 
     final rows = instances.data.terminatedInstances.map((i) => [
           i.name,
-          i.instanceType!.name,
+          i.instanceType.name,
           i.ip,
-          i.region!.name,
+          i.region.name,
           i.sshKeyNames.join(', '),
           // TODO: Create a mapping to the correct user-facing name.
           i.status.value,
@@ -278,8 +283,9 @@ class RestartInstancesCommand extends Command<void> {
 
     final RestartInstance200Response instances;
     try {
-      final maybeInstances = await DefaultApi(defaultApiClient).restartInstance(
-          RestartInstanceRequest(instanceIds: argResults!.rest));
+      final maybeInstances = await InstancesApi(defaultApiClient)
+          .restartInstance(
+              InstanceRestartRequest(instanceIds: argResults!.rest));
       // This should never be null: an ApiException should have been thrown instead.
       instances = maybeInstances!;
     } on ApiException catch (e) {
@@ -289,9 +295,9 @@ class RestartInstancesCommand extends Command<void> {
 
     final rows = instances.data.restartedInstances.map((i) => [
           i.name,
-          i.instanceType!.name,
+          i.instanceType.name,
           i.ip,
-          i.region!.name,
+          i.region.name,
           i.sshKeyNames.join(', '),
           // TODO: Create a mapping to the correct user-facing name.
           i.status.value,

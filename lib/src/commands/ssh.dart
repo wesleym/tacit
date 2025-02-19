@@ -27,7 +27,7 @@ class ListSshKeysCommand extends Command<void> {
   Future<void> run() async {
     final ListSSHKeys200Response sshKeys;
     try {
-      final maybeSshKeys = await DefaultApi(defaultApiClient).listSSHKeys();
+      final maybeSshKeys = await SSHKeysApi(defaultApiClient).listSSHKeys();
       // This should never be null: an ApiException should have been thrown instead.
       sshKeys = maybeSshKeys!;
     } on ApiException catch (e) {
@@ -91,7 +91,7 @@ class AddSshKeyCommand extends Command<void> {
 
     final AddSSHKey200Response sshKeys;
     try {
-      final maybeSshKeys = await DefaultApi(defaultApiClient)
+      final maybeSshKeys = await SSHKeysApi(defaultApiClient)
           .addSSHKey(AddSSHKeyRequest(name: rest[0]));
       // This should never be null: an ApiException should have been thrown instead.
       sshKeys = maybeSshKeys!;
@@ -104,13 +104,10 @@ class AddSshKeyCommand extends Command<void> {
       ..writeln('Name: ${sshKeys.data.name}')
       ..writeln()
       ..writeln('Public key:')
-      ..writeln(sshKeys.data.publicKey);
-    if (sshKeys.data.privateKey != null) {
-      stdout
-        ..writeln()
-        ..writeln('Private key:')
-        ..writeln(sshKeys.data.privateKey);
-    }
+      ..writeln(sshKeys.data.publicKey)
+      ..writeln()
+      ..writeln('Private key:')
+      ..writeln(sshKeys.data.privateKey);
   }
 }
 
@@ -141,7 +138,7 @@ class DeleteSshKeyCommand extends Command<void> {
     }
 
     try {
-      await DefaultApi(defaultApiClient).deleteSSHKey(rest[0]);
+      await SSHKeysApi(defaultApiClient).deleteSSHKey(rest[0]);
     } on ApiException catch (e) {
       stderr.write('Failed to delete SSH public key: ${e.message}');
       return;
