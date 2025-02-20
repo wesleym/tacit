@@ -20,13 +20,13 @@ class InstancesApi {
   ///
   /// Retrieves the details of a specific instance, including whether or not the instance is running.
   ///
-  /// Note: This method returns the HTTP [Response].
+  /// Note: This method returns the HTTP [http.Response].
   ///
   /// Parameters:
   ///
   /// * [String] id (required):
   ///   The unique identifier (ID) of the instance
-  Future<Response> getInstanceWithHttpInfo(
+  Future<http.Response> getInstanceWithHttpInfo(
     String id,
   ) async {
     // ignore: prefer_const_declarations
@@ -86,12 +86,12 @@ class InstancesApi {
   ///
   /// Launches a Lambda On-Demand Cloud instance.
   ///
-  /// Note: This method returns the HTTP [Response].
+  /// Note: This method returns the HTTP [http.Response].
   ///
   /// Parameters:
   ///
   /// * [InstanceLaunchRequest] instanceLaunchRequest (required):
-  Future<Response> launchInstanceWithHttpInfo(
+  Future<http.Response> launchInstanceWithHttpInfo(
     InstanceLaunchRequest instanceLaunchRequest,
   ) async {
     // ignore: prefer_const_declarations
@@ -150,8 +150,8 @@ class InstancesApi {
   ///
   /// Retrieves a list of your running instances.
   ///
-  /// Note: This method returns the HTTP [Response].
-  Future<Response> listInstancesWithHttpInfo() async {
+  /// Note: This method returns the HTTP [http.Response].
+  Future<http.Response> listInstancesWithHttpInfo() async {
     // ignore: prefer_const_declarations
     final path = r'/api/v1/instances';
 
@@ -200,7 +200,7 @@ class InstancesApi {
   ///
   /// Updates the details of the specified instance.
   ///
-  /// Note: This method returns the HTTP [Response].
+  /// Note: This method returns the HTTP [http.Response].
   ///
   /// Parameters:
   ///
@@ -208,7 +208,7 @@ class InstancesApi {
   ///   The unique identifier (ID) of the instance
   ///
   /// * [InstanceModificationRequest] instanceModificationRequest (required):
-  Future<Response> postInstanceWithHttpInfo(
+  Future<http.Response> postInstanceWithHttpInfo(
     String id,
     InstanceModificationRequest instanceModificationRequest,
   ) async {
@@ -273,12 +273,12 @@ class InstancesApi {
   ///
   /// Restarts one or more instances.
   ///
-  /// Note: This method returns the HTTP [Response].
+  /// Note: This method returns the HTTP [http.Response].
   ///
   /// Parameters:
   ///
   /// * [InstanceRestartRequest] instanceRestartRequest (required):
-  Future<Response> restartInstanceWithHttpInfo(
+  Future<http.Response> restartInstanceWithHttpInfo(
     InstanceRestartRequest instanceRestartRequest,
   ) async {
     // ignore: prefer_const_declarations
@@ -337,8 +337,8 @@ class InstancesApi {
   ///
   /// Retrieves a list of the instance types currently offered on Lambda's public cloud, as well as details about each type. Details include resource specifications, pricing, and regional availability.
   ///
-  /// Note: This method returns the HTTP [Response].
-  Future<Response>
+  /// Note: This method returns the HTTP [http.Response].
+  Future<http.Response>
       svrExternalApiV1EndpointsInstanceTypesGetWithHttpInfo() async {
     // ignore: prefer_const_declarations
     final path = r'/api/v1/instance-types';
@@ -390,12 +390,12 @@ class InstancesApi {
   ///
   /// Terminates one or more instances.
   ///
-  /// Note: This method returns the HTTP [Response].
+  /// Note: This method returns the HTTP [http.Response].
   ///
   /// Parameters:
   ///
   /// * [InstanceTerminateRequest] instanceTerminateRequest (required):
-  Future<Response> terminateInstanceWithHttpInfo(
+  Future<http.Response> terminateInstanceWithHttpInfo(
     InstanceTerminateRequest instanceTerminateRequest,
   ) async {
     // ignore: prefer_const_declarations

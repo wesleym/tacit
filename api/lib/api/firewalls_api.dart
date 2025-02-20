@@ -20,8 +20,8 @@ class FirewallsApi {
   ///
   /// Retrieves a list of your firewall rules.  **Note:** Firewall rules do not apply to the **us-south-1** region.
   ///
-  /// Note: This method returns the HTTP [Response].
-  Future<Response> firewallRulesListWithHttpInfo() async {
+  /// Note: This method returns the HTTP [http.Response].
+  Future<http.Response> firewallRulesListWithHttpInfo() async {
     // ignore: prefer_const_declarations
     final path = r'/api/v1/firewall-rules';
 
@@ -70,12 +70,12 @@ class FirewallsApi {
   ///
   /// Overwrites the inbound firewall rules currently active for your account's instances with the desired rules.  **Note:** Firewall rules do not apply to the **us-south-1** region.
   ///
-  /// Note: This method returns the HTTP [Response].
+  /// Note: This method returns the HTTP [http.Response].
   ///
   /// Parameters:
   ///
   /// * [FirewallRulesPutRequest] firewallRulesPutRequest (required):
-  Future<Response> firewallRulesSetWithHttpInfo(
+  Future<http.Response> firewallRulesSetWithHttpInfo(
     FirewallRulesPutRequest firewallRulesPutRequest,
   ) async {
     // ignore: prefer_const_declarations

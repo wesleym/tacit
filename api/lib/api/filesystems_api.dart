@@ -20,12 +20,12 @@ class FilesystemsApi {
   ///
   /// Creates a new filesystem.
   ///
-  /// Note: This method returns the HTTP [Response].
+  /// Note: This method returns the HTTP [http.Response].
   ///
   /// Parameters:
   ///
   /// * [FilesystemCreateRequest] filesystemCreateRequest (required):
-  Future<Response> createFilesystemWithHttpInfo(
+  Future<http.Response> createFilesystemWithHttpInfo(
     FilesystemCreateRequest filesystemCreateRequest,
   ) async {
     // ignore: prefer_const_declarations
@@ -84,12 +84,12 @@ class FilesystemsApi {
   ///
   /// Deletes the filesystem with the specified ID. The filesystem must not be attached to any running instances at the time of deletion.
   ///
-  /// Note: This method returns the HTTP [Response].
+  /// Note: This method returns the HTTP [http.Response].
   ///
   /// Parameters:
   ///
   /// * [String] id (required):
-  Future<Response> filesystemDeleteWithHttpInfo(
+  Future<http.Response> filesystemDeleteWithHttpInfo(
     String id,
   ) async {
     // ignore: prefer_const_declarations
@@ -148,8 +148,8 @@ class FilesystemsApi {
   ///
   /// Retrieves a list of your filesystems.
   ///
-  /// Note: This method returns the HTTP [Response].
-  Future<Response> listFilesystemsWithHttpInfo() async {
+  /// Note: This method returns the HTTP [http.Response].
+  Future<http.Response> listFilesystemsWithHttpInfo() async {
     // ignore: prefer_const_declarations
     final path = r'/api/v1/file-systems';
 

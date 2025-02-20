@@ -10,9 +10,9 @@
 
 part of openapi.api;
 
-class Response0 {
-  /// Returns a new [Response0] instance.
-  Response0({
+class Response {
+  /// Returns a new [Response] instance.
+  Response({
     this.code = 'global/invalid-address',
     this.message = 'Your billing address is invalid.',
     this.suggestion =
@@ -31,7 +31,7 @@ class Response0 {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is Response0 &&
+      other is Response &&
           other.code == code &&
           other.message == message &&
           other.suggestion == suggestion;
@@ -53,10 +53,10 @@ class Response0 {
     return json;
   }
 
-  /// Returns a new [Response0] instance and imports its values from
+  /// Returns a new [Response] instance and imports its values from
   /// [value] if it's a [Map], null otherwise.
   // ignore: prefer_constructors_over_static_methods
-  static Response0? fromJson(dynamic value) {
+  static Response? fromJson(dynamic value) {
     if (value is Map) {
       final json = value.cast<String, dynamic>();
 
@@ -73,7 +73,7 @@ class Response0 {
         return true;
       }());
 
-      return Response0(
+      return Response(
         code: mapValueOfType<String>(json, r'code')!,
         message: mapValueOfType<String>(json, r'message')!,
         suggestion: mapValueOfType<String>(json, r'suggestion')!,
@@ -82,14 +82,14 @@ class Response0 {
     return null;
   }
 
-  static List<Response0> listFromJson(
+  static List<Response> listFromJson(
     dynamic json, {
     bool growable = false,
   }) {
-    final result = <Response0>[];
+    final result = <Response>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
-        final value = Response0.fromJson(row);
+        final value = Response.fromJson(row);
         if (value != null) {
           result.add(value);
         }
@@ -98,12 +98,12 @@ class Response0 {
     return result.toList(growable: growable);
   }
 
-  static Map<String, Response0> mapFromJson(dynamic json) {
-    final map = <String, Response0>{};
+  static Map<String, Response> mapFromJson(dynamic json) {
+    final map = <String, Response>{};
     if (json is Map && json.isNotEmpty) {
       json = json.cast<String, dynamic>(); // ignore: parameter_assignments
       for (final entry in json.entries) {
-        final value = Response0.fromJson(entry.value);
+        final value = Response.fromJson(entry.value);
         if (value != null) {
           map[entry.key] = value;
         }
@@ -113,16 +113,16 @@ class Response0 {
   }
 
   // maps a json object with a list of Response-objects as value to a dart map
-  static Map<String, List<Response0>> mapListFromJson(
+  static Map<String, List<Response>> mapListFromJson(
     dynamic json, {
     bool growable = false,
   }) {
-    final map = <String, List<Response0>>{};
+    final map = <String, List<Response>>{};
     if (json is Map && json.isNotEmpty) {
       // ignore: parameter_assignments
       json = json.cast<String, dynamic>();
       for (final entry in json.entries) {
-        map[entry.key] = Response0.listFromJson(
+        map[entry.key] = Response.listFromJson(
           entry.value,
           growable: growable,
         );
