@@ -191,6 +191,59 @@ class LaunchInstancesCommand extends Command<void> {
   }
 }
 
+class RenameInstanceCommand extends Command<void> {
+  @override
+  String get description => 'Rename instance';
+
+  @override
+  String get name => 'rename-instance';
+
+  @override
+  String get invocation {
+    var parents = [name];
+    for (var command = parent; command != null; command = command.parent) {
+      parents.add(command.name);
+    }
+    parents.add(runner!.executableName);
+
+    final invocation = parents.reversed.join(' ');
+    return '$invocation instance_id name';
+  }
+
+  @override
+  Future<void> run() async {
+    assert(argResults!.rest.length == 1 || argResults!.rest.length == 2);
+
+    final String? newName;
+    if (argResults!.rest.length == 1) {
+      newName = null;
+    } else {
+      newName = argResults!.rest[1];
+    }
+
+    final GetInstance200Response instances;
+    try {
+      final maybeInstances = await InstancesApi(defaultApiClient).postInstance(
+          argResults!.rest.first, InstanceModificationRequest(name: newName));
+      // This should never be null: an ApiException should have been thrown instead.
+      instances = maybeInstances!;
+    } on ApiException catch (e) {
+      stderr.write('Failed to rename instance: ${e.message}');
+      return;
+    }
+
+    printKvs([
+      Kv('Instance ID:', instances.data.id),
+      Kv('Name:', instances.data.name),
+      Kv('Instance type:', instances.data.instanceType.description),
+      Kv('IP address:', instances.data.ip),
+      Kv('Region:', instances.data.region.name.value),
+      Kv('SSH keys:', instances.data.sshKeyNames.join(', ')),
+      Kv('Status:', instances.data.status.value),
+    ]);
+  }
+}
+
 class TerminateInstancesCommand extends Command<void> {
   @override
   String get description => 'Terminate instances';

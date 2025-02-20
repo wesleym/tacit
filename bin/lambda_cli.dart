@@ -20,6 +20,7 @@ void main(List<String> arguments) async {
     ..addCommand(ListInstancesCommand())
     ..addCommand(InstanceDetailsCommand())
     ..addCommand(LaunchInstancesCommand())
+    ..addCommand(RenameInstanceCommand())
     ..addCommand(TerminateInstancesCommand())
     ..addCommand(RestartInstancesCommand())
     ..addCommand(InstanceTypesCommand())
