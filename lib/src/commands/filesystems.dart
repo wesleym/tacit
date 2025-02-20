@@ -28,6 +28,7 @@ class FilesystemsCommand extends Command<void> {
   Future<void> run() async {
     final table = Table(
       header: [
+        'ID',
         'Name',
         'Region',
         'Mount Point',
@@ -48,6 +49,7 @@ class FilesystemsCommand extends Command<void> {
     }
 
     final rows = filesystems.data.map((fs) => [
+          fs.id,
           fs.name,
           fs.region.name,
           fs.mountPoint,
@@ -104,11 +106,51 @@ class CreateFilesystemCommand extends Command<void> {
     }
 
     printKvs([
+      Kv('ID', filesystems.data.id),
       Kv('Name', filesystems.data.name),
       Kv('Region', filesystems.data.region.name.value),
       Kv('Mount point', filesystems.data.mountPoint),
       Kv('Use', filesystems.data.isInUse ? 'In use' : 'Not in use'),
       Kv('Size', filesystems.data.bytesUsed.toString()),
     ]);
+  }
+}
+
+class DeleteFilesystemsCommand extends Command<void> {
+  @override
+  String get description => 'Delete filesystems';
+
+  @override
+  String get name => 'delete-filesystem';
+
+  @override
+  String get invocation {
+    var parents = [name];
+    for (var command = parent; command != null; command = command.parent) {
+      parents.add(command.name);
+    }
+    parents.add(runner!.executableName);
+
+    return '${parents.reversed.join(' ')} filesystem_id';
+  }
+
+  @override
+  Future<void> run() async {
+    if (argResults!.rest.length != 1) {
+      usageException('Filesystem ID is required');
+    }
+
+    final FilesystemDelete200Response filesystems;
+    try {
+      final maybeFilesystems = await FilesystemsApi(defaultApiClient)
+          .filesystemDelete(argResults!.rest.first);
+      // This should never be null: an ApiException should have been thrown instead.
+      filesystems = maybeFilesystems!;
+    } on ApiException catch (e) {
+      stderr.write('Failed to delete filesystem: ${e.message}');
+      return;
+    }
+
+    stdout.writeln('Deleted filesystem ${filesystems.data.deletedIds.first}');
   }
 }
