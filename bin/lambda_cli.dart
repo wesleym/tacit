@@ -25,6 +25,7 @@ void main(List<String> arguments) async {
     ..addCommand(RestartInstancesCommand())
     ..addCommand(InstanceTypesCommand())
     ..addCommand(FilesystemsCommand())
+    ..addCommand(CreateFilesystemCommand())
     ..addCommand(ListSshKeysCommand())
     ..addCommand(AddSshKeyCommand())
     ..addCommand(DeleteSshKeyCommand())
