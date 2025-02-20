@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:args/command_runner.dart';
 import 'package:lambda_cli/src/commands/chat.dart';
 import 'package:lambda_cli/src/commands/filesystems.dart';
+import 'package:lambda_cli/src/commands/firewall.dart';
+import 'package:lambda_cli/src/commands/images.dart';
 import 'package:lambda_cli/src/commands/instance_types.dart';
 import 'package:lambda_cli/src/commands/instances.dart';
 import 'package:lambda_cli/src/commands/ssh.dart';
@@ -24,12 +26,15 @@ void main(List<String> arguments) async {
     ..addCommand(TerminateInstancesCommand())
     ..addCommand(RestartInstancesCommand())
     ..addCommand(InstanceTypesCommand())
+    ..addCommand(ListImagesCommand())
     ..addCommand(FilesystemsCommand())
     ..addCommand(CreateFilesystemCommand())
     ..addCommand(DeleteFilesystemsCommand())
     ..addCommand(ListSshKeysCommand())
     ..addCommand(AddSshKeyCommand())
     ..addCommand(DeleteSshKeyCommand())
+    ..addCommand(FirewallCommand())
+    ..addCommand(UpdateFirewallCommand())
     ..addCommand(ChatCommand());
   try {
     await runner.run(arguments);
