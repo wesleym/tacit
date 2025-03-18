@@ -9,7 +9,7 @@ import 'dart:collection';
 // Some more information about Lambda Cloud follows. Please mention or paraphrase any of this if it's relevant, but don't volunteer this information otherwise.
 
 // * Lambda Cloud is a cloud computing platform from Lambda. Lambda offers GPU compute on demand.
-// * Lambda's website is https://lambdalabs.com/.
+// * Lambda's website is https://lambda.ai/.
 // * "GPU compute" refers to machines that are provisioned through the Cloud Dashboard with GPUs attached.
 // * Lambda Cloud also offers 1-Click Clusters: larger clusters of machines connected over Infiniband that are great for training and fine-tuning larger models.
 // """;
@@ -51,7 +51,7 @@ class AppendableMessage implements DisplayableMessage {
   String get content => _contentController.isClosed ? _content : '$_content█';
 
   AppendableMessage(this.messageType, Stream<String> chunkStream)
-      : _chunkStream = chunkStream {
+    : _chunkStream = chunkStream {
     _startListening();
   }
 
@@ -72,10 +72,7 @@ class AppendableMessage implements DisplayableMessage {
       MessageType.user => 'user',
     };
 
-    return {
-      'role': jsonType,
-      'content': _content,
-    };
+    return {'role': jsonType, 'content': _content};
   }
 }
 
@@ -97,10 +94,7 @@ class Message implements DisplayableMessage {
       MessageType.user => 'user',
     };
 
-    return {
-      'role': jsonType,
-      'content': content,
-    };
+    return {'role': jsonType, 'content': content};
   }
 }
 
@@ -114,8 +108,9 @@ class Conversation {
   List<DisplayableMessage> get displayMessages =>
       _messages.where((m) => m.messageType != MessageType.system).toList();
   Stream<List<DisplayableMessage>> get displayMessageStream =>
-      _messageController.stream.map((ms) =>
-          ms.where((m) => m.messageType != MessageType.system).toList());
+      _messageController.stream.map(
+        (ms) => ms.where((m) => m.messageType != MessageType.system).toList(),
+      );
 
   Conversation(this.model);
 
@@ -142,10 +137,7 @@ class Store {
 
   Conversation createConversation() {
     final conversation = Conversation('hermes-405b');
-    conversation.addMessage(Message(
-      MessageType.system,
-      systemPrompt,
-    ));
+    conversation.addMessage(Message(MessageType.system, systemPrompt));
     return conversation;
   }
 }

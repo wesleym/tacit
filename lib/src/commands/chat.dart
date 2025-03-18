@@ -63,20 +63,24 @@ class ChatCommand extends Command<void> {
     // });
 
     // Disable debug printing from library. See <https://api.dart.dev/dart-async/Zone/print.html>.
-    final sseStream = runZoned(() {
-      return SSEClient.subscribeToSSE(
-        method: SSERequestType.POST,
-        url: 'https://api.lambdalabs.com/v1/chat/completions',
-        header: {
-          'Authorization': 'Bearer $apiKey',
-          'Content-Type': 'application/json; charset=utf-8',
-        },
-        body: _conversation.toJson(),
-      );
-    }, zoneSpecification: ZoneSpecification(
+    final sseStream = runZoned(
+      () {
+        return SSEClient.subscribeToSSE(
+          method: SSERequestType.POST,
+          url: 'https://api.lambda.ai/v1/chat/completions',
+          header: {
+            'Authorization': 'Bearer $apiKey',
+            'Content-Type': 'application/json; charset=utf-8',
+          },
+          body: _conversation.toJson(),
+        );
+      },
+      zoneSpecification: ZoneSpecification(
         print: (Zone self, ZoneDelegate parent, Zone zone, String line) {
-      // Suppress printing.
-    }));
+          // Suppress printing.
+        },
+      ),
+    );
     var role = MessageType.assistant;
     final chunkController = StreamController<String>.broadcast();
     final message = AppendableMessage(role, chunkController.stream);
@@ -89,8 +93,9 @@ class ChatCommand extends Command<void> {
         // setState(() {
         //   _inProgress = false;
         // });
-        role =
-            switch (json.decode(event.data!)['choices'][0]['delta']['role']) {
+        role = switch (json.decode(
+          event.data!,
+        )['choices'][0]['delta']['role']) {
           'system' => MessageType.system,
           'assistant' => MessageType.assistant,
           'user' => MessageType.user,
