@@ -1,4 +1,4 @@
-// Openapi Generator last run: : 2025-02-20T13:07:22.465826
+// Openapi Generator last run: : 2025-07-07T11:48:17.532915
 import 'package:openapi_generator_annotations/openapi_generator_annotations.dart';
 
 const specUrl = 'https://cloud.lambda.ai/api/v1/openapi.yaml';
