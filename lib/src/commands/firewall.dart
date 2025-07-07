@@ -106,7 +106,7 @@ class UpdateFirewallCommand extends Command<void> {
       final sourceNetwork = argResults!.rest[i + 2];
       final description = argResults!.rest[i + 3];
 
-      final protocol = SecurityGroupRuleProtocol.values.firstWhere(
+      final protocol = NetworkProtocol.values.firstWhere(
           (p) => p.value == protocolString,
           orElse: () =>
               throw usageException('Invalid protocol: $protocolString'));

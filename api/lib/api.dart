@@ -18,6 +18,7 @@ import 'package:collection/collection.dart';
 import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 import 'package:meta/meta.dart';
+import 'package:openapi/api.dart';
 
 part 'api_client.dart';
 part 'api_helper.dart';
@@ -74,7 +75,6 @@ part 'model/image_specification_id.dart';
 part 'model/instance.dart';
 part 'model/instance_action_availability.dart';
 part 'model/instance_action_availability_details.dart';
-part 'model/instance_action_availability_details_reason_code.dart';
 part 'model/instance_action_unavailable_code.dart';
 part 'model/instance_launch_request.dart';
 part 'model/instance_launch_request_image.dart';

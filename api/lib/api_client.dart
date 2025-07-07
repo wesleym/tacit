@@ -310,7 +310,7 @@ class ApiClient {
         case 'InstanceActionAvailabilityDetails':
           return InstanceActionAvailabilityDetails.fromJson(value);
         case 'InstanceActionAvailabilityDetailsReasonCode':
-          return InstanceActionAvailabilityDetailsReasonCode.fromJson(value);
+          return value;
         case 'InstanceActionUnavailableCode':
           return InstanceActionUnavailableCodeTypeTransformer().decode(value);
         case 'InstanceLaunchRequest':

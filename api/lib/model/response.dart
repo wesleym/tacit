@@ -10,6 +10,12 @@
 
 part of openapi.api;
 
+/// Returns a valid [T] value found at the specified Map [key], null otherwise.
+T? mapValueOfType<T>(dynamic map, String key) {
+  final dynamic value = map is Map ? map[key] : null;
+  return value is T ? value : null;
+}
+
 class Response {
   /// Returns a new [Response] instance.
   Response({

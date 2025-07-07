@@ -35,10 +35,10 @@ class InstanceTypesCommand extends Command<void> {
       ],
     );
 
-    final SvrExternalApiV1EndpointsInstanceTypesGet200Response instanceTypes;
+    final ListInstanceTypes200Response instanceTypes;
     try {
-      final maybeInstanceTypes = await InstancesApi(defaultApiClient)
-          .svrExternalApiV1EndpointsInstanceTypesGet();
+      final maybeInstanceTypes =
+          await InstancesApi(defaultApiClient).listInstanceTypes();
       // This should never be null: an ApiException should have been thrown instead.
       instanceTypes = maybeInstanceTypes!;
     } on ApiException catch (e) {
