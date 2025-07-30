@@ -23,6 +23,7 @@ class InstanceLaunchRequest {
     this.image,
     this.userData,
     this.tags = const [],
+    this.firewallRulesets = const [],
   });
 
   /// The region into which you want to launch the instance.
@@ -78,6 +79,9 @@ class InstanceLaunchRequest {
   /// Key/value pairs representing the instance's tags.
   List<RequestedTagEntry> tags;
 
+  /// The firewall rulesets to associate with the instance. The firewall rulesets must exist in the same region as the instance.
+  List<FirewallRulesetEntry> firewallRulesets;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -91,7 +95,8 @@ class InstanceLaunchRequest {
           other.name == name &&
           other.image == image &&
           other.userData == userData &&
-          _deepEquality.equals(other.tags, tags);
+          _deepEquality.equals(other.tags, tags) &&
+          _deepEquality.equals(other.firewallRulesets, firewallRulesets);
 
   @override
   int get hashCode =>
@@ -105,11 +110,12 @@ class InstanceLaunchRequest {
       (name == null ? 0 : name!.hashCode) +
       (image == null ? 0 : image!.hashCode) +
       (userData == null ? 0 : userData!.hashCode) +
-      (tags.hashCode);
+      (tags.hashCode) +
+      (firewallRulesets.hashCode);
 
   @override
   String toString() =>
-      'InstanceLaunchRequest[regionName=$regionName, instanceTypeName=$instanceTypeName, sshKeyNames=$sshKeyNames, fileSystemNames=$fileSystemNames, fileSystemMounts=$fileSystemMounts, hostname=$hostname, name=$name, image=$image, userData=$userData, tags=$tags]';
+      'InstanceLaunchRequest[regionName=$regionName, instanceTypeName=$instanceTypeName, sshKeyNames=$sshKeyNames, fileSystemNames=$fileSystemNames, fileSystemMounts=$fileSystemMounts, hostname=$hostname, name=$name, image=$image, userData=$userData, tags=$tags, firewallRulesets=$firewallRulesets]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -139,6 +145,7 @@ class InstanceLaunchRequest {
       json[r'user_data'] = null;
     }
     json[r'tags'] = this.tags;
+    json[r'firewall_rulesets'] = this.firewallRulesets;
     return json;
   }
 
@@ -182,6 +189,8 @@ class InstanceLaunchRequest {
         image: InstanceLaunchRequestImage.fromJson(json[r'image']),
         userData: mapValueOfType<String>(json, r'user_data'),
         tags: RequestedTagEntry.listFromJson(json[r'tags']),
+        firewallRulesets:
+            FirewallRulesetEntry.listFromJson(json[r'firewall_rulesets']),
       );
     }
     return null;

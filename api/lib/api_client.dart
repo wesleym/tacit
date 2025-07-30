@@ -245,10 +245,16 @@ class ApiClient {
           return ApiErrorFilesystemInUse.fromJson(value);
         case 'ApiErrorFilesystemNotFound':
           return ApiErrorFilesystemNotFound.fromJson(value);
+        case 'ApiErrorFirewallRulesetInUse':
+          return ApiErrorFirewallRulesetInUse.fromJson(value);
+        case 'ApiErrorFirewallRulesetNotFound':
+          return ApiErrorFirewallRulesetNotFound.fromJson(value);
         case 'ApiErrorInstanceNotFound':
           return ApiErrorInstanceNotFound.fromJson(value);
         case 'ApiErrorInsufficientCapacity':
           return ApiErrorInsufficientCapacity.fromJson(value);
+        case 'ApiErrorInternal':
+          return ApiErrorInternal.fromJson(value);
         case 'ApiErrorInvalidBillingAddress':
           return ApiErrorInvalidBillingAddress.fromJson(value);
         case 'ApiErrorInvalidParameters':
@@ -265,6 +271,16 @@ class ApiClient {
           return CreateFilesystem400Response.fromJson(value);
         case 'CreateFilesystem400ResponseError':
           return CreateFilesystem400ResponseError.fromJson(value);
+        case 'CreateFirewallRuleset200Response':
+          return CreateFirewallRuleset200Response.fromJson(value);
+        case 'CreateFirewallRuleset400Response':
+          return CreateFirewallRuleset400Response.fromJson(value);
+        case 'CreateFirewallRuleset400ResponseError':
+          return CreateFirewallRuleset400ResponseError.fromJson(value);
+        case 'CreateFirewallRuleset409Response':
+          return CreateFirewallRuleset409Response.fromJson(value);
+        case 'DeleteFirewallRuleset400Response':
+          return DeleteFirewallRuleset400Response.fromJson(value);
         case 'DeleteSSHKey200Response':
           return DeleteSSHKey200Response.fromJson(value);
         case 'Filesystem':
@@ -287,14 +303,32 @@ class ApiClient {
           return FirewallRulesList200Response.fromJson(value);
         case 'FirewallRulesPutRequest':
           return FirewallRulesPutRequest.fromJson(value);
+        case 'FirewallRuleset':
+          return FirewallRuleset.fromJson(value);
+        case 'FirewallRulesetCreateRequest':
+          return FirewallRulesetCreateRequest.fromJson(value);
+        case 'FirewallRulesetEntry':
+          return FirewallRulesetEntry.fromJson(value);
+        case 'FirewallRulesetPatchRequest':
+          return FirewallRulesetPatchRequest.fromJson(value);
+        case 'FirewallRulesetsList200Response':
+          return FirewallRulesetsList200Response.fromJson(value);
         case 'GeneratedSSHKey':
           return GeneratedSSHKey.fromJson(value);
+        case 'GetFirewallRuleset404Response':
+          return GetFirewallRuleset404Response.fromJson(value);
+        case 'GetGlobalFirewallRuleset200Response':
+          return GetGlobalFirewallRuleset200Response.fromJson(value);
         case 'GetInstance200Response':
           return GetInstance200Response.fromJson(value);
         case 'GetInstance401Response':
           return GetInstance401Response.fromJson(value);
         case 'GetInstance404Response':
           return GetInstance404Response.fromJson(value);
+        case 'GlobalFirewallRuleset':
+          return GlobalFirewallRuleset.fromJson(value);
+        case 'GlobalFirewallRulesetPatchRequest':
+          return GlobalFirewallRulesetPatchRequest.fromJson(value);
         case 'Image':
           return Image.fromJson(value);
         case 'ImageArchitecture':
@@ -310,7 +344,7 @@ class ApiClient {
         case 'InstanceActionAvailabilityDetails':
           return InstanceActionAvailabilityDetails.fromJson(value);
         case 'InstanceActionAvailabilityDetailsReasonCode':
-          return value;
+          return InstanceActionAvailabilityDetailsReasonCode.fromJson(value);
         case 'InstanceActionUnavailableCode':
           return InstanceActionUnavailableCodeTypeTransformer().decode(value);
         case 'InstanceLaunchRequest':

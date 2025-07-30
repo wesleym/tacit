@@ -18,6 +18,7 @@ Name | Type | Description | Notes
 **image** | [**InstanceLaunchRequestImage**](InstanceLaunchRequestImage.md) |  | [optional] 
 **userData** | **String** | An instance configuration string specified in a valid [cloud-init user-data](https://cloudinit.readthedocs.io/en/latest/explanation/format.html) format. You can use this field to configure your instance on launch. The user data string must be plain text and cannot exceed 1MB in size. | [optional] 
 **tags** | [**List<RequestedTagEntry>**](RequestedTagEntry.md) | Key/value pairs representing the instance's tags. | [optional] [default to const []]
+**firewallRulesets** | [**List<FirewallRulesetEntry>**](FirewallRulesetEntry.md) | The firewall rulesets to associate with the instance. The firewall rulesets must exist in the same region as the instance. | [optional] [default to const []]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

@@ -28,6 +28,7 @@ class Instance {
     this.jupyterUrl,
     required this.actions,
     this.tags = const [],
+    this.firewallRulesets = const [],
   });
 
   /// The unique identifier of the instance.
@@ -110,6 +111,9 @@ class Instance {
   /// Key/value pairs representing the instance's tags.
   List<TagEntry> tags;
 
+  /// The firewall rulesets associated with this instance.
+  List<FirewallRulesetEntry> firewallRulesets;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -128,7 +132,8 @@ class Instance {
           other.jupyterToken == jupyterToken &&
           other.jupyterUrl == jupyterUrl &&
           other.actions == actions &&
-          _deepEquality.equals(other.tags, tags);
+          _deepEquality.equals(other.tags, tags) &&
+          _deepEquality.equals(other.firewallRulesets, firewallRulesets);
 
   @override
   int get hashCode =>
@@ -147,11 +152,12 @@ class Instance {
       (jupyterToken == null ? 0 : jupyterToken!.hashCode) +
       (jupyterUrl == null ? 0 : jupyterUrl!.hashCode) +
       (actions.hashCode) +
-      (tags.hashCode);
+      (tags.hashCode) +
+      (firewallRulesets.hashCode);
 
   @override
   String toString() =>
-      'Instance[id=$id, name=$name, ip=$ip, privateIp=$privateIp, status=$status, sshKeyNames=$sshKeyNames, fileSystemNames=$fileSystemNames, fileSystemMounts=$fileSystemMounts, region=$region, instanceType=$instanceType, hostname=$hostname, jupyterToken=$jupyterToken, jupyterUrl=$jupyterUrl, actions=$actions, tags=$tags]';
+      'Instance[id=$id, name=$name, ip=$ip, privateIp=$privateIp, status=$status, sshKeyNames=$sshKeyNames, fileSystemNames=$fileSystemNames, fileSystemMounts=$fileSystemMounts, region=$region, instanceType=$instanceType, hostname=$hostname, jupyterToken=$jupyterToken, jupyterUrl=$jupyterUrl, actions=$actions, tags=$tags, firewallRulesets=$firewallRulesets]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -194,6 +200,7 @@ class Instance {
     }
     json[r'actions'] = this.actions;
     json[r'tags'] = this.tags;
+    json[r'firewall_rulesets'] = this.firewallRulesets;
     return json;
   }
 
@@ -242,6 +249,8 @@ class Instance {
         jupyterUrl: mapValueOfType<String>(json, r'jupyter_url'),
         actions: InstanceActionAvailability.fromJson(json[r'actions'])!,
         tags: TagEntry.listFromJson(json[r'tags']),
+        firewallRulesets:
+            FirewallRulesetEntry.listFromJson(json[r'firewall_rulesets']),
       );
     }
     return null;

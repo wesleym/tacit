@@ -51,9 +51,15 @@ void main() {
       // TODO
     });
 
-    // The names of the filesystems attached to the instance. If no filesystems are attached, this array is empty.
+    // The names of the filesystems mounted to the instance. If no filesystems are mounted, this array is empty.
     // List<String> fileSystemNames (default value: const [])
     test('to test the property `fileSystemNames`', () async {
+      // TODO
+    });
+
+    // The filesystems, along with the mount paths, mounted to  the instances. If no filesystems are mounted, this parameter will be missing from the response.
+    // List<FilesystemMountEntry> fileSystemMounts (default value: const [])
+    test('to test the property `fileSystemMounts`', () async {
       // TODO
     });
 
@@ -90,6 +96,18 @@ void main() {
     // A set of status objects representing the current availability of common instance operations.
     // InstanceActionAvailability actions
     test('to test the property `actions`', () async {
+      // TODO
+    });
+
+    // Key/value pairs representing the instance's tags.
+    // List<TagEntry> tags (default value: const [])
+    test('to test the property `tags`', () async {
+      // TODO
+    });
+
+    // The firewall rulesets associated with this instance.
+    // List<FirewallRulesetEntry> firewallRulesets (default value: const [])
+    test('to test the property `firewallRulesets`', () async {
       // TODO
     });
   });

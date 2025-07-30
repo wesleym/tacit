@@ -23,6 +23,7 @@ Name | Type | Description | Notes
 **jupyterUrl** | **String** | The URL that opens the JupyterLab environment on the instance. | [optional] 
 **actions** | [**InstanceActionAvailability**](InstanceActionAvailability.md) | A set of status objects representing the current availability of common instance operations. | 
 **tags** | [**List<TagEntry>**](TagEntry.md) | Key/value pairs representing the instance's tags. | [optional] [default to const []]
+**firewallRulesets** | [**List<FirewallRulesetEntry>**](FirewallRulesetEntry.md) | The firewall rulesets associated with this instance. | [optional] [default to const []]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
