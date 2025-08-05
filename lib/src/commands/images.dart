@@ -13,6 +13,9 @@ class ListImagesCommand extends Command<void> {
   String get name => 'images';
 
   @override
+  String get category => 'Base images';
+
+  @override
   String get invocation {
     var parents = [name];
     for (var command = parent; command != null; command = command.parent) {

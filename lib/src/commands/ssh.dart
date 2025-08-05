@@ -13,6 +13,9 @@ class ListSshKeysCommand extends Command<void> {
   String get name => 'ssh-keys';
 
   @override
+  String get category => 'SSH keys';
+
+  @override
   String get invocation {
     var parents = [name];
     for (var command = parent; command != null; command = command.parent) {
@@ -71,6 +74,9 @@ class AddSshKeyCommand extends Command<void> {
   String get name => 'add-ssh-key';
 
   @override
+  String get category => 'SSH keys';
+
+  @override
   String get invocation {
     var parents = [name];
     for (var command = parent; command != null; command = command.parent) {
@@ -117,6 +123,9 @@ class DeleteSshKeyCommand extends Command<void> {
 
   @override
   String get name => 'delete-ssh-key';
+
+  @override
+  String get category => 'SSH keys';
 
   @override
   String get invocation {

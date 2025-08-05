@@ -14,6 +14,9 @@ class FilesystemsCommand extends Command<void> {
   String get name => 'filesystems';
 
   @override
+  String get category => 'Filesystems';
+
+  @override
   String get invocation {
     var parents = [name];
     for (var command = parent; command != null; command = command.parent) {
@@ -69,6 +72,9 @@ class CreateFilesystemCommand extends Command<void> {
   String get name => 'create-filesystem';
 
   @override
+  String get category => 'Filesystems';
+
+  @override
   String get invocation {
     var parents = [name];
     for (var command = parent; command != null; command = command.parent) {
@@ -122,6 +128,9 @@ class DeleteFilesystemsCommand extends Command<void> {
 
   @override
   String get name => 'delete-filesystem';
+
+  @override
+  String get category => 'Filesystems';
 
   @override
   String get invocation {

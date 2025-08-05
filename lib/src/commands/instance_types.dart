@@ -13,6 +13,9 @@ class InstanceTypesCommand extends Command<void> {
   String get name => 'instance-types';
 
   @override
+  String get category => 'GPU instances';
+
+  @override
   String get invocation {
     var parents = [name];
     for (var command = parent; command != null; command = command.parent) {

@@ -20,6 +20,9 @@ class ChatCommand extends Command<void> {
   String get name => 'chat';
 
   @override
+  String get category => 'Inference';
+
+  @override
   String get invocation {
     var parents = [name];
     for (var command = parent; command != null; command = command.parent) {

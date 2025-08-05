@@ -13,6 +13,9 @@ class FirewallCommand extends Command<void> {
   String get name => 'firewall';
 
   @override
+  String get category => 'Firewall';
+
+  @override
   String get invocation {
     var parents = [name];
     for (var command = parent; command != null; command = command.parent) {
@@ -71,6 +74,9 @@ class UpdateFirewallCommand extends Command<void> {
 
   @override
   String get name => 'update-firewall';
+
+  @override
+  String get category => 'Firewall';
 
   @override
   String get invocation {

@@ -14,6 +14,9 @@ class ListInstancesCommand extends Command<void> {
   String get name => 'instances';
 
   @override
+  String get category => 'GPU instances';
+
+  @override
   String get invocation {
     var parents = [name];
     for (var command = parent; command != null; command = command.parent) {
@@ -70,6 +73,9 @@ class InstanceDetailsCommand extends Command<void> {
 
   @override
   String get name => 'instance';
+
+  @override
+  String get category => 'GPU instances';
 
   @override
   String get invocation {
@@ -144,6 +150,9 @@ class LaunchInstancesCommand extends Command<void> {
   String get name => 'launch-instances';
 
   @override
+  String get category => 'GPU instances';
+
+  @override
   String get invocation {
     var parents = [name];
     for (var command = parent; command != null; command = command.parent) {
@@ -199,6 +208,9 @@ class RenameInstanceCommand extends Command<void> {
   String get name => 'rename-instance';
 
   @override
+  String get category => 'GPU instances';
+
+  @override
   String get invocation {
     var parents = [name];
     for (var command = parent; command != null; command = command.parent) {
@@ -250,6 +262,9 @@ class TerminateInstancesCommand extends Command<void> {
 
   @override
   String get name => 'terminate-instances';
+
+  @override
+  String get category => 'GPU instances';
 
   @override
   String get invocation {
@@ -308,6 +323,9 @@ class RestartInstancesCommand extends Command<void> {
 
   @override
   String get name => 'restart-instances';
+
+  @override
+  String get category => 'GPU instances';
 
   @override
   String get invocation {
