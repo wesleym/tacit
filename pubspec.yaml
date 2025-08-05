@@ -1,6 +1,6 @@
 name: lambda_cli
-description: A sample command-line application.
-version: 1.0.0
+description: A command-line tool to manage resources on Lambda Cloud.
+version: 1.3.0
 repository: https://github.com/lambdal/lambda-cloud-dart-cli
 publish_to: none
 
@@ -14,7 +14,8 @@ dependencies:
   args: ^2.6.0
   cli_table: ^1.0.2
   colorize: ^3.0.0
-  # I half half a mind to replace this accursed thing with a regular HTTP client for pulling in Flutter as a dep and `print`-ing directly to stdout.
+  # I have half a mind to replace this accursed thing with a regular HTTP client
+  # for pulling in Flutter as a dep and `print`-ing directly to stdout.
   flutter_client_sse: ^2.0.3
 
 dev_dependencies:
