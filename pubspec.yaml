@@ -1,6 +1,6 @@
 name: lambda_cli
 description: A command-line tool to manage resources on Lambda Cloud.
-version: 1.3.0
+version: 1.4.0
 repository: https://github.com/lambdal/lambda-cloud-dart-cli
 publish_to: none
 
