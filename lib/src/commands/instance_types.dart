@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:args/command_runner.dart';
-import 'package:cli_table/cli_table.dart';
+import 'package:lambda_cli/src/adaptprinter.dart';
 import 'package:openapi/api.dart';
 
 class InstanceTypesCommand extends Command<void> {
@@ -31,15 +31,9 @@ class InstanceTypesCommand extends Command<void> {
 
   @override
   Future<void> run() async {
-    final table = Table(
-      header: [
-        'Name',
-        'CPU Cores',
-        'RAM (GiB)',
-        'SSD (GiB)',
-        'Price (\$USD/hr)'
-      ],
-    );
+    final printer = AdaptPrinter()
+      ..addHeaders(
+          ['Name', 'CPU Cores', 'RAM (GiB)', 'SSD (GiB)', 'Price (\$USD/hr)']);
 
     final ListInstanceTypes200Response instanceTypes;
     try {
@@ -52,15 +46,15 @@ class InstanceTypesCommand extends Command<void> {
       return;
     }
 
-    final rows = instanceTypes.data.entries.map((entry) => [
-          entry.value.instanceType.description,
-          entry.value.instanceType.specs.vcpus,
-          entry.value.instanceType.specs.memoryGib,
-          entry.value.instanceType.specs.storageGib,
-          (entry.value.instanceType.priceCentsPerHour / 100.0)
-              .toStringAsFixed(2),
-        ]);
-    table.addAll(rows);
-    stdout.writeln(table);
+    for (final entry in instanceTypes.data.entries) {
+      printer.addRow([
+        entry.value.instanceType.description,
+        entry.value.instanceType.specs.vcpus.toString(),
+        entry.value.instanceType.specs.memoryGib.toString(),
+        entry.value.instanceType.specs.storageGib.toString(),
+        (entry.value.instanceType.priceCentsPerHour / 100.0).toStringAsFixed(2),
+      ]);
+    }
+    stdout.writeln(printer.render());
   }
 }

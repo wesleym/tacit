@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:args/command_runner.dart';
-import 'package:cli_table/cli_table.dart';
+import 'package:lambda_cli/src/adaptprinter.dart';
 import 'package:openapi/api.dart';
 
 class FirewallCommand extends Command<void> {
@@ -31,14 +31,13 @@ class FirewallCommand extends Command<void> {
 
   @override
   Future<void> run() async {
-    final table = Table(
-      header: [
+    final printer = AdaptPrinter()
+      ..addHeaders([
         'Protocol',
         'Port range',
         'Source',
         'Description',
-      ],
-    );
+      ]);
 
     final FirewallRulesList200Response firewallRules;
     try {
@@ -51,23 +50,23 @@ class FirewallCommand extends Command<void> {
       return;
     }
 
-    final rows = firewallRules.data.map((fs) {
+    for (final rule in firewallRules.data) {
       final String portString;
-      if (fs.portRange.length == 1 || fs.portRange[0] == fs.portRange[1]) {
-        portString = fs.portRange[0].toString();
+      if (rule.portRange.length == 1 ||
+          rule.portRange[0] == rule.portRange[1]) {
+        portString = rule.portRange[0].toString();
       } else {
-        portString = '${fs.portRange[0]}–${fs.portRange[1]}';
+        portString = '${rule.portRange[0]}-${rule.portRange[1]}';
       }
 
-      return [
-        fs.protocol.value,
+      printer.addRow([
+        rule.protocol.value,
         portString,
-        fs.sourceNetwork,
-        fs.description,
-      ];
-    });
-    table.addAll(rows);
-    stdout.writeln(table);
+        rule.sourceNetwork,
+        rule.description,
+      ]);
+    }
+    stdout.writeln(printer.render());
   }
 }
 
@@ -102,14 +101,13 @@ class UpdateFirewallCommand extends Command<void> {
           'Each rule must have a protocol, port range, source network, and description');
     }
 
-    final table = Table(
-      header: [
+    final printer = AdaptPrinter()
+      ..addHeaders([
         'Protocol',
         'Port range',
         'Source',
         'Description',
-      ],
-    );
+      ]);
 
     final List<FirewallRule> rules = [];
     for (var i = 0; i < argResults!.rest.length; i += 4) {
@@ -153,22 +151,22 @@ class UpdateFirewallCommand extends Command<void> {
       return;
     }
 
-    final rows = firewallRules.data.map((fs) {
+    for (final rule in firewallRules.data) {
       final String portString;
-      if (fs.portRange.length == 1 || fs.portRange[0] == fs.portRange[1]) {
-        portString = fs.portRange[0].toString();
+      if (rule.portRange.length == 1 ||
+          rule.portRange[0] == rule.portRange[1]) {
+        portString = rule.portRange[0].toString();
       } else {
-        portString = '${fs.portRange[0]}–${fs.portRange[1]}';
+        portString = '${rule.portRange[0]}-${rule.portRange[1]}';
       }
 
-      return [
-        fs.protocol.value,
+      printer.addRow([
+        rule.protocol.value,
         portString,
-        fs.sourceNetwork,
-        fs.description,
-      ];
-    });
-    table.addAll(rows);
-    stdout.writeln(table);
+        rule.sourceNetwork,
+        rule.description,
+      ]);
+    }
+    stdout.writeln(printer.render());
   }
 }

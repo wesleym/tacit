@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:args/command_runner.dart';
-import 'package:cli_table/cli_table.dart';
+import 'package:lambda_cli/src/adaptprinter.dart';
 import 'package:openapi/api.dart';
 
 class ListImagesCommand extends Command<void> {
@@ -31,12 +31,11 @@ class ListImagesCommand extends Command<void> {
 
   @override
   Future<void> run() async {
-    final table = Table(
-      header: [
+    final printer = AdaptPrinter()
+      ..addHeaders([
         'ID',
         'Family',
-      ],
-    );
+      ]);
 
     final ListImages200Response images;
     try {
@@ -52,7 +51,7 @@ class ListImagesCommand extends Command<void> {
           entry.id,
           entry.family,
         ]);
-    table.addAll(rows);
-    stdout.writeln(table);
+    printer.addRows(rows);
+    stdout.writeln(printer.render());
   }
 }

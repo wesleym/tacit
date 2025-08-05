@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:args/command_runner.dart';
-import 'package:cli_table/cli_table.dart';
+import 'package:lambda_cli/src/adaptprinter.dart';
 import 'package:lambda_cli/src/kvprinter.dart';
 import 'package:openapi/api.dart';
 
@@ -32,16 +32,15 @@ class FilesystemsCommand extends Command<void> {
 
   @override
   Future<void> run() async {
-    final table = Table(
-      header: [
+    final printer = AdaptPrinter()
+      ..addHeaders([
         'ID',
         'Name',
         'Region',
         'Mount Point',
         'Status',
         'Size (B)',
-      ],
-    );
+      ]);
 
     final ListFilesystems200Response filesystems;
     try {
@@ -54,16 +53,17 @@ class FilesystemsCommand extends Command<void> {
       return;
     }
 
-    final rows = filesystems.data.map((fs) => [
-          fs.id,
-          fs.name,
-          fs.region.name,
-          fs.mountPoint,
-          fs.isInUse ? 'In use' : 'Not in use',
-          fs.bytesUsed,
-        ]);
-    table.addAll(rows);
-    stdout.writeln(table);
+    for (final fs in filesystems.data) {
+      printer.addRow([
+        fs.id,
+        fs.name,
+        fs.region.name.value,
+        fs.mountPoint,
+        fs.isInUse ? 'In use' : 'Not in use',
+        fs.bytesUsed.toString(),
+      ]);
+    }
+    stdout.writeln(printer.render());
   }
 }
 
