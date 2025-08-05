@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:args/command_runner.dart';
-import 'package:cli_table/cli_table.dart';
+import 'package:dart_console/dart_console.dart';
 import 'package:lambda_cli/src/kvprinter.dart';
 import 'package:openapi/api.dart';
 
@@ -32,17 +32,16 @@ class ListInstancesCommand extends Command<void> {
 
   @override
   Future<void> run() async {
-    final table = Table(
-      header: [
-        'Instance ID',
-        'Name',
-        'Type',
-        'IP Address',
-        'Region',
-        'SSH Key',
-        'Status',
-      ],
-    );
+    final table = Table()
+      ..headerColor = ConsoleColor.red
+      ..headerStyle = FontStyle.bold
+      ..insertColumn(header: 'Instance ID')
+      ..insertColumn(header: 'Name')
+      ..insertColumn(header: 'Type')
+      ..insertColumn(header: 'IP Address')
+      ..insertColumn(header: 'Region')
+      ..insertColumn(header: 'SSH Key')
+      ..insertColumn(header: 'Status');
 
     final ListInstances200Response instances;
     try {
@@ -57,16 +56,53 @@ class ListInstancesCommand extends Command<void> {
 
     final rows = instances.data.map((i) => [
           i.id,
-          i.name,
+          i.name ?? "—",
           i.instanceType.name,
-          i.ip,
+          i.ip ?? "—",
           i.region.name,
           i.sshKeyNames.join(', '),
           // TODO: Create a mapping to the correct user-facing name.
           i.status.value,
         ]);
-    table.addAll(rows);
-    stdout.writeln(table);
+    table.insertRows(rows.toList(growable: false));
+    final renderedTable = table.render();
+    if (renderedTable.indexOf('\n') <= Console().windowWidth) {
+      stdout.writeln(renderedTable);
+    } else {
+      for (final i in instances.data) {
+        printKvs([
+          Kv(
+            'Instance ID',
+            i.id,
+          ),
+          Kv(
+            'Name',
+            i.name ?? "—",
+          ),
+          Kv(
+            'Type',
+            i.instanceType.name,
+          ),
+          Kv(
+            'IP Address',
+            i.ip ?? "—",
+          ),
+          Kv(
+            'Region',
+            i.region.name.toString(),
+          ),
+          Kv(
+            'SSH Key',
+            i.sshKeyNames.join(', '),
+          ),
+          Kv(
+            'Status',
+            // TODO: Create a mapping to the correct user-facing name.
+            i.status.value,
+          ),
+        ]);
+      }
+    }
   }
 }
 
@@ -172,7 +208,7 @@ class LaunchInstancesCommand extends Command<void> {
 
   @override
   Future<void> run() async {
-    final table = Table(header: ['Instance ID']);
+    final table = Table()..insertColumn(header: 'Instance ID');
 
     final filesystemNames = <String>[];
     final filesystemValue = argResults!.option('filesystem');
@@ -201,7 +237,7 @@ class LaunchInstancesCommand extends Command<void> {
     }
 
     final rows = instances.data.instanceIds.map((i) => [i]);
-    table.addAll(rows);
+    table.insertRows(rows.toList(growable: false));
     stdout.writeln(table);
   }
 }
@@ -286,16 +322,13 @@ class TerminateInstancesCommand extends Command<void> {
 
   @override
   Future<void> run() async {
-    final table = Table(
-      header: [
-        'Name',
-        'Type',
-        'IP Address',
-        'Region',
-        'SSH Key',
-        'Status',
-      ],
-    );
+    final table = Table()
+      ..insertColumn(header: 'Name')
+      ..insertColumn(header: 'Type')
+      ..insertColumn(header: 'IP Address')
+      ..insertColumn(header: 'Region')
+      ..insertColumn(header: 'SSH Key')
+      ..insertColumn(header: 'Status');
 
     final TerminateInstance200Response instances;
     try {
@@ -310,15 +343,15 @@ class TerminateInstancesCommand extends Command<void> {
     }
 
     final rows = instances.data.terminatedInstances.map((i) => [
-          i.name,
+          i.name ?? "—",
           i.instanceType.name,
-          i.ip,
+          i.ip ?? "—",
           i.region.name,
           i.sshKeyNames.join(', '),
           // TODO: Create a mapping to the correct user-facing name.
           i.status.value,
         ]);
-    table.addAll(rows);
+    table.insertRows(rows.toList(growable: false));
     stdout.writeln(table);
   }
 }
@@ -347,17 +380,13 @@ class RestartInstancesCommand extends Command<void> {
 
   @override
   Future<void> run() async {
-    final table = Table(
-      header: [
-        'Name',
-        'Type',
-        'IP Address',
-        'Region',
-        'SSH Key',
-        'Status',
-      ],
-    );
-
+    final table = Table()
+      ..insertColumn(header: 'Name')
+      ..insertColumn(header: 'Type')
+      ..insertColumn(header: 'IP Address')
+      ..insertColumn(header: 'Region')
+      ..insertColumn(header: 'SSH Key')
+      ..insertColumn(header: 'Status');
     final RestartInstance200Response instances;
     try {
       final maybeInstances = await InstancesApi(defaultApiClient)
@@ -371,15 +400,15 @@ class RestartInstancesCommand extends Command<void> {
     }
 
     final rows = instances.data.restartedInstances.map((i) => [
-          i.name,
+          i.name ?? "—",
           i.instanceType.name,
-          i.ip,
+          i.ip ?? "—",
           i.region.name,
           i.sshKeyNames.join(', '),
           // TODO: Create a mapping to the correct user-facing name.
           i.status.value,
         ]);
-    table.addAll(rows);
+    table.insertRows(rows.toList(growable: false));
     stdout.writeln(table);
   }
 }
