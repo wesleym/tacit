@@ -10,10 +10,13 @@ class FirewallCommand extends Command<void> {
   String get description => 'Print firewall rules';
 
   @override
-  String get name => 'firewall';
+  String get name => 'describe-firewall';
 
   @override
   String get category => 'Firewall';
+
+  @override
+  List<String> get aliases => ['firewall'];
 
   @override
   String get invocation {
@@ -73,10 +76,13 @@ class UpdateFirewallCommand extends Command<void> {
   String get description => 'Set firewall rules';
 
   @override
-  String get name => 'update-firewall';
+  String get name => 'replace-firewall';
 
   @override
   String get category => 'Firewall';
+
+  @override
+  List<String> get aliases => ['update-firewall'];
 
   @override
   String get invocation {

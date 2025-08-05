@@ -10,10 +10,13 @@ class InstanceTypesCommand extends Command<void> {
   String get description => 'Retrieve list of offered instance types';
 
   @override
-  String get name => 'instance-types';
+  String get name => 'list-instance-types';
 
   @override
   String get category => 'GPU instances';
+
+  @override
+  List<String> get aliases => ['instance-types'];
 
   @override
   String get invocation {

@@ -10,10 +10,13 @@ class ListSshKeysCommand extends Command<void> {
   String get description => 'List registered SSH keys';
 
   @override
-  String get name => 'ssh-keys';
+  String get name => 'list-ssh-keys';
 
   @override
   String get category => 'SSH keys';
+
+  @override
+  List<String> get aliases => ['ssh-keys'];
 
   @override
   String get invocation {

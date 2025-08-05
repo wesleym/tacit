@@ -11,10 +11,13 @@ class ListInstancesCommand extends Command<void> {
   String get description => 'List running instances';
 
   @override
-  String get name => 'instances';
+  String get name => 'list-instances';
 
   @override
   String get category => 'GPU instances';
+
+  @override
+  List<String> get aliases => ['instances'];
 
   @override
   String get invocation {
@@ -72,10 +75,13 @@ class InstanceDetailsCommand extends Command<void> {
   String get description => 'Get details of a specific instance';
 
   @override
-  String get name => 'instance';
+  String get name => 'describe-instance';
 
   @override
   String get category => 'GPU instances';
+
+  @override
+  List<String> get aliases => ['instance'];
 
   @override
   String get invocation {

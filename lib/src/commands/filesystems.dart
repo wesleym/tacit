@@ -11,10 +11,13 @@ class FilesystemsCommand extends Command<void> {
   String get description => 'List filesystems';
 
   @override
-  String get name => 'filesystems';
+  String get name => 'list-filesystems';
 
   @override
   String get category => 'Filesystems';
+
+  @override
+  List<String> get aliases => ['filesystems'];
 
   @override
   String get invocation {

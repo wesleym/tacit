@@ -10,10 +10,13 @@ class ListImagesCommand extends Command<void> {
   String get description => 'List the available boot disk images';
 
   @override
-  String get name => 'images';
+  String get name => 'list-images';
 
   @override
   String get category => 'Base images';
+
+  @override
+  List<String> get aliases => ['images'];
 
   @override
   String get invocation {
