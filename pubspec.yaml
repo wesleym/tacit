@@ -1,7 +1,7 @@
-name: lambda_cli
-description: A command-line tool to manage resources on Lambda Cloud.
+name: tacit
+description: A command-line tool for the Lambda Cloud API and the Lambda Inference API.
 version: 1.4.0
-repository: https://github.com/lambdal/lambda-cloud-dart-cli
+repository: https://github.com/wesleym/tacit
 publish_to: none
 
 environment:

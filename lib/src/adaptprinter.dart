@@ -1,5 +1,5 @@
 import 'package:dart_console/dart_console.dart';
-import 'package:lambda_cli/src/kvprinter.dart';
+import 'package:tacit/src/kvprinter.dart';
 
 class AdaptPrinter {
   final List<String> _headers = [];

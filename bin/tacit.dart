@@ -1,14 +1,14 @@
 import 'dart:io';
 
 import 'package:args/command_runner.dart';
-import 'package:lambda_cli/src/commands/chat.dart';
-import 'package:lambda_cli/src/commands/filesystems.dart';
-import 'package:lambda_cli/src/commands/firewall.dart';
-import 'package:lambda_cli/src/commands/images.dart';
-import 'package:lambda_cli/src/commands/instance_types.dart';
-import 'package:lambda_cli/src/commands/instances.dart';
-import 'package:lambda_cli/src/commands/ssh.dart';
-import 'package:lambda_cli/src/secrets.dart';
+import 'package:tacit/src/commands/chat.dart';
+import 'package:tacit/src/commands/filesystems.dart';
+import 'package:tacit/src/commands/firewall.dart';
+import 'package:tacit/src/commands/images.dart';
+import 'package:tacit/src/commands/instance_types.dart';
+import 'package:tacit/src/commands/instances.dart';
+import 'package:tacit/src/commands/ssh.dart';
+import 'package:tacit/src/secrets.dart';
 import 'package:openapi/api.dart';
 
 void main(List<String> arguments) async {
@@ -19,7 +19,10 @@ void main(List<String> arguments) async {
       ..apiKey = apiKey,
   );
 
-  final runner = CommandRunner('lambda', 'A Lambda Cloud CLI')
+  final runner = CommandRunner(
+    'tacit',
+    'A command-line tool for the Lambda Cloud API and the Lambda Inference API',
+  )
     ..addCommand(ListInstancesCommand())
     ..addCommand(InstanceDetailsCommand())
     ..addCommand(LaunchInstancesCommand())

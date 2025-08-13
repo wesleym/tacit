@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:args/command_runner.dart';
-import 'package:lambda_cli/src/adaptprinter.dart';
-import 'package:lambda_cli/src/kvprinter.dart';
+import 'package:tacit/src/adaptprinter.dart';
+import 'package:tacit/src/kvprinter.dart';
 import 'package:openapi/api.dart';
 
 class FilesystemsCommand extends Command<void> {

@@ -1,7 +1,7 @@
-build: bin/lambda
+build: bin/tacit
 
-bin/lambda: api/pubspec.yaml bin/lambda_cli.dart $(shell find lib -name '*.dart')
-	dart compile exe bin/lambda_cli.dart -o $@
+bin/tacit: api/pubspec.yaml bin/tacit.dart $(shell find lib -name '*.dart')
+	dart compile exe bin/tacit.dart -o $@
 
 api/pubspec.yaml: lib/api.dart
 	dart run build_runner build --delete-conflicting-outputs

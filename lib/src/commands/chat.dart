@@ -5,8 +5,8 @@ import 'dart:io';
 import 'package:args/command_runner.dart';
 import 'package:flutter_client_sse/constants/sse_request_type_enum.dart';
 import 'package:flutter_client_sse/flutter_client_sse.dart';
-import 'package:lambda_cli/src/secrets.dart';
-import 'package:lambda_cli/src/store.dart';
+import 'package:tacit/src/secrets.dart';
+import 'package:tacit/src/store.dart';
 
 class ChatCommand extends Command<void> {
   final _conversation = Conversation('hermes-3-llama-3.1-405b-fp8')
@@ -80,7 +80,7 @@ class ChatCommand extends Command<void> {
       },
       zoneSpecification: ZoneSpecification(
         print: (Zone self, ZoneDelegate parent, Zone zone, String line) {
-          // Suppress printing.
+          // Suppress SSE library logging.
         },
       ),
     );
@@ -91,11 +91,7 @@ class ChatCommand extends Command<void> {
 
     var first = true;
     await for (final event in sseStream) {
-      // _log.info('start of event stream loop');
       if (first) {
-        // setState(() {
-        //   _inProgress = false;
-        // });
         role = switch (json.decode(
           event.data!,
         )['choices'][0]['delta']['role']) {

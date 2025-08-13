@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:args/command_runner.dart';
-import 'package:lambda_cli/src/adaptprinter.dart';
+import 'package:tacit/src/adaptprinter.dart';
 import 'package:openapi/api.dart';
 
 class FirewallCommand extends Command<void> {

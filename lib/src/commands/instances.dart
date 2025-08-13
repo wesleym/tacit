@@ -3,8 +3,8 @@ import 'dart:io';
 
 import 'package:args/command_runner.dart';
 import 'package:dart_console/dart_console.dart';
-import 'package:lambda_cli/src/adaptprinter.dart';
-import 'package:lambda_cli/src/kvprinter.dart';
+import 'package:tacit/src/adaptprinter.dart';
+import 'package:tacit/src/kvprinter.dart';
 import 'package:openapi/api.dart';
 
 class ListInstancesCommand extends Command<void> {
