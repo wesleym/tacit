@@ -1,6 +1,6 @@
 name: tacit
 description: A command-line tool for the Lambda Cloud API and the Lambda Inference API.
-version: 1.4.0
+version: 2.0.0
 repository: https://github.com/wesleym/tacit
 publish_to: none
 
