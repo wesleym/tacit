@@ -1,6 +1,8 @@
 Tacit
 =====
 
+[![Dart](https://github.com/wesleym/tacit/actions/workflows/dart.yml/badge.svg)](https://github.com/wesleym/tacit/actions/workflows/dart.yml)
+
 A command-line tool for the Lambda Cloud API and the Lambda Inference API. This program provides a way to manage Lambda Cloud resources and chat with Lambda Chat.
 
 ![Screencast](/screencast.svg)
