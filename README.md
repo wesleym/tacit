@@ -5,7 +5,7 @@ Tacit
 
 A command-line tool for the Lambda Cloud API and the Lambda Inference API. This program provides a way to manage Lambda Cloud resources and chat with Lambda Chat.
 
-![Screencast](/screencast.svg)
+[![Screencast](/screencast.svg)](https://asciinema.org/a/Qc8f2FePLHkPNvCOAvBDey1Ax)
 
 Building
 -----
