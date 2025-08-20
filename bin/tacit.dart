@@ -9,7 +9,7 @@ import 'package:tacit/src/commands/instance_types.dart';
 import 'package:tacit/src/commands/instances.dart';
 import 'package:tacit/src/commands/ssh.dart';
 import 'package:tacit/src/secrets.dart';
-import 'package:openapi/api.dart';
+import 'package:lambda_cloud_dart_sdk/lambda_cloud_dart_sdk.dart';
 
 void main(List<String> arguments) async {
   defaultApiClient = ApiClient(

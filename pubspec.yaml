@@ -8,12 +8,12 @@ environment:
   sdk: ^3.6.0
 
 dependencies:
-  openapi:
-    path: api
   # This accursed fork is necessary to avoid pulling in Flutter as a dep and
   # `print`-ing directly to stdout.
   flutter_client_sse:
     git: https://github.com/wesleym/flutter_client_sse.git
+  lambda_cloud_dart_sdk:
+    git: https://github.com/wesleym/lambda-cloud-dart-sdk.git
   openapi_generator_annotations: ^6.1.0
   args: ^2.6.0
   colorize: ^3.0.0

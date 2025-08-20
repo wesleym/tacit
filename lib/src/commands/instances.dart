@@ -5,7 +5,7 @@ import 'package:args/command_runner.dart';
 import 'package:dart_console/dart_console.dart';
 import 'package:tacit/src/adaptprinter.dart';
 import 'package:tacit/src/kvprinter.dart';
-import 'package:openapi/api.dart';
+import 'package:lambda_cloud_dart_sdk/lambda_cloud_dart_sdk.dart';
 
 class ListInstancesCommand extends Command<void> {
   @override
